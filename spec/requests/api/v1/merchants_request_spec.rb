@@ -199,13 +199,12 @@ describe "Merchants API" do
 
     it 'can get the top x merchants ranked by total items' do
       customer_2 = create(:customer)
-
       invoice_5 = create(:invoice, merchant: @merchant_2, customer: customer_2)
       invoice_6 = create(:invoice, merchant: @merchant_3, customer: customer_2)
       invoice_7 = create(:invoice, merchant: @merchant_4, customer: customer_2)
       create(:invoice_item, item: @item_4, invoice: invoice_5, quantity: 2, unit_price: @item_4.unit_price)
       create(:invoice_item, item: @item_8, invoice: invoice_6, quantity: 1, unit_price: @item_8.unit_price)
-      create(:invoice_item, item: @item_10, invoice: invoice_7, quantity: 5, unit_price: @item_10.unit_price)
+      create(:invoice_item, item: @item_10, invoice: invoice_7, quantity: 6, unit_price: @item_10.unit_price)
       create(:transaction, invoice: invoice_5)
       create(:transaction, invoice: invoice_6)
       create(:transaction, invoice: invoice_7, result: 'failed')
