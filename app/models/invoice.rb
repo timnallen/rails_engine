@@ -3,4 +3,9 @@ class Invoice < ApplicationRecord
   belongs_to :merchant
   has_many :invoice_items
   has_many :items, through: :invoice_items
+
+  validates_presence_of :name
+  validates_presence_of :customer
+  validates_presence_of :merchant
+  validates_presence_of :status
 end
