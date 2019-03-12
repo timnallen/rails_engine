@@ -6,8 +6,7 @@ class CreateTransactions < ActiveRecord::Migration[5.2]
       t.string :result
       t.references :invoice, foreign_key: true
 
-      t.string :created_at
-      t.string :updated_at
+      t.timestamps
     end
   end
 end
