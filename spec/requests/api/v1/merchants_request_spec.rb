@@ -124,9 +124,9 @@ describe "Merchants API" do
 
     get "/api/v1/merchants/random"
 
-    merchant = JSON.parse(response.body)
+    merchant_2 = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(merchant["id"]).to eq(id || id_2)
+    expect(merchant_2["id"]).to be_in([id, id_2])
   end
 end
