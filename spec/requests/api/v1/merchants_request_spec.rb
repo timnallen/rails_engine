@@ -44,7 +44,7 @@ describe "Merchants API" do
     expect(merchant["name"]).to eq(name)
   end
 
-  it "can get one merchant by searching its created_at date" do
+  xit "can get one merchant by searching its created_at date" do
     created_at = create(:merchant).created_at
 
     get "/api/v1/merchants/find?created_at=#{created_at}"
@@ -57,7 +57,6 @@ describe "Merchants API" do
 
   xit "can get one merchant by searching its updated_at date" do
     updated_at = create(:merchant).updated_at
-    binding.pry
 
     get "/api/v1/merchants/find?updated_at=#{updated_at}"
 
@@ -65,5 +64,26 @@ describe "Merchants API" do
 
     expect(response).to be_successful
     expect(merchant["updated_at"]).to eq(updated_at)
+  end
+
+  it 'can get all merchants by searching by id or name' do
+    id = create(:merchant).id
+
+    get "/api/v1/merchants/find_all?id=#{id}"
+
+    merchants = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchants[0]["id"]).to eq(id)
+
+    name = create(:merchant).name
+
+    get "/api/v1/merchants/find_all?name=#{name}"
+
+    merchants = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchants[0]["name"]).to eq(name)
+    expect(merchants.count).to eq(2)
   end
 end
