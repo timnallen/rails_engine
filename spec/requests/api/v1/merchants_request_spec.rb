@@ -44,7 +44,7 @@ describe "Merchants API" do
     expect(merchant["name"]).to eq(name)
   end
 
-  xit "can get one merchant by searching its created_at date" do
+  it "can get one merchant by searching its created_at date" do
     created_at = create(:merchant).created_at
 
     get "/api/v1/merchants/find?created_at=#{created_at}"
@@ -55,7 +55,7 @@ describe "Merchants API" do
     expect(merchant["created_at"]).to eq(created_at)
   end
 
-  xit "can get one merchant by searching its updated_at date" do
+  it "can get one merchant by searching its updated_at date" do
     updated_at = create(:merchant).updated_at
 
     get "/api/v1/merchants/find?updated_at=#{updated_at}"
