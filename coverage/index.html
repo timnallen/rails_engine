@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2019-03-12T13:27:39-06:00">2019-03-12T13:27:39-06:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2019-03-12T13:28:25-06:00">2019-03-12T13:28:25-06:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -740,7 +740,7 @@
         <li class="covered" data-hits="2" data-linenumber="3">
           <span class="hits">2</span>
           
-          <code class="ruby">    render json: Merchant.order(Arel.sql(&quot;RANDOM()&quot;)).first</code>
+          <code class="ruby">    render json: Merchant.order(Arel.sql(&quot;RANDOM()&quot;)).limit(1).first</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="4">
