@@ -54,17 +54,17 @@
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants/search_controller.rb": [
         1,
         1,
-        0,
+        4,
         null,
         null,
         1,
-        2,
+        4,
         null,
         null,
         1,
         null,
         1,
-        2,
+        8,
         null,
         null
       ],
@@ -91,6 +91,6 @@
         0
       ]
     },
-    "timestamp": 1552402007
+    "timestamp": 1552411338
   }
 }

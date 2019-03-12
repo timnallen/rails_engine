@@ -45,25 +45,25 @@ describe "Merchants API" do
   end
 
   it "can get one merchant by searching its created_at date" do
-    created_at = create(:merchant).created_at
+    created_at = create(:merchant, created_at: "2012-03-27 14:54:05 UTC").created_at
 
     get "/api/v1/merchants/find?created_at=#{created_at}"
 
     merchant = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(merchant["created_at"]).to eq(created_at)
+    expect(merchant["created_at"]).to eq("2012-03-27T14:54:05.000Z")
   end
 
   it "can get one merchant by searching its updated_at date" do
-    updated_at = create(:merchant).updated_at
+    updated_at = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC").updated_at
 
     get "/api/v1/merchants/find?updated_at=#{updated_at}"
 
     merchant = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(merchant["updated_at"]).to eq(updated_at)
+    expect(merchant["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
   end
 
   it 'can get all merchants by searching by id or name' do
@@ -84,6 +84,29 @@ describe "Merchants API" do
 
     expect(response).to be_successful
     expect(merchants[0]["name"]).to eq(name)
+    expect(merchants[1]["name"]).to eq(name)
+    expect(merchants.count).to eq(2)
+  end
+
+  it 'can get all merchants by searching by created_at or updated_at' do
+    created_at = create(:merchant, created_at: "2012-03-27 14:54:05 UTC", updated_at: "2012-03-27 14:54:05 UTC".to_datetime).created_at
+
+    get "/api/v1/merchants/find_all?created_at=#{created_at}"
+
+    merchants = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchants[0]["created_at"]).to eq("2012-03-27T14:54:05.000Z")
+
+    updated_at = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC").updated_at
+
+    get "/api/v1/merchants/find_all?updated_at=#{updated_at}"
+
+    merchants = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchants[0]["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
+    expect(merchants[1]["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
     expect(merchants.count).to eq(2)
   end
 end
