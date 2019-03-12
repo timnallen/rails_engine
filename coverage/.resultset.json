@@ -3,6 +3,7 @@
     "coverage": {
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/models/customer.rb": [
         1,
+        1,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/models/application_record.rb": [
@@ -20,14 +21,20 @@
         1,
         1,
         1,
+        1,
+        1,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/models/item.rb": [
         1,
         1,
+        1,
+        1,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/models/merchant.rb": [
+        1,
+        1,
         1,
         null
       ],
@@ -91,6 +98,6 @@
         0
       ]
     },
-    "timestamp": 1552411927
+    "timestamp": 1552412321
   }
 }
