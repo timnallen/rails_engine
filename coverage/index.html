@@ -14,14 +14,14 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2019-03-12T13:29:02-06:00">2019-03-12T13:29:02-06:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2019-03-12T14:02:31-06:00">2019-03-12T14:02:31-06:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="red">73.08%</span></span>
+    (<span class="covered_percent"><span class="red">74.55%</span></span>
      covered at
      <span class="covered_strength">
        <span class="red">
@@ -31,9 +31,9 @@
   </h2>
   <a name="AllFiles"></a>
   <div>
-    <b>15</b> files in total.
-    <b>52</b> relevant lines. 
-    <span class="green"><b>38</b> lines covered</span> and
+    <b>16</b> files in total.
+    <b>55</b> relevant lines. 
+    <span class="green"><b>41</b> lines covered</span> and
     <span class="red"><b>14</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -196,6 +196,16 @@
         <td>3</td>
         <td>2</td>
         <td>2</td>
+        <td>0</td>
+        <td>1.0</td>
+      </tr>
+      
+      <tr>
+        <td class="strong"><a href="#c50e791ba1415d6229bb4f67021643c50a676e12" class="src_link" title="app/serializers/merchant_serializer.rb">app/serializers/merchant_serializer.rb</a></td>
+        <td class="green strong">100.0 %</td>
+        <td>4</td>
+        <td>3</td>
+        <td>3</td>
         <td>0</td>
         <td>1.0</td>
       </tr>
@@ -561,19 +571,19 @@
           <div class="file_list_container" id="Ungrouped">
   <h2>
     <span class="group_name">Ungrouped</span>
-    (<span class="covered_percent"><span class="red">0.0%</span></span>
+    (<span class="covered_percent"><span class="red">27.27%</span></span>
      covered at
      <span class="covered_strength">
        <span class="red">
-         0.0
+         0.27
        </span>
     </span> hits/line)
   </h2>
   <a name="Ungrouped"></a>
   <div>
-    <b>2</b> files in total.
-    <b>8</b> relevant lines. 
-    <span class="green"><b>0</b> lines covered</span> and
+    <b>3</b> files in total.
+    <b>11</b> relevant lines. 
+    <span class="green"><b>3</b> lines covered</span> and
     <span class="red"><b>8</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -608,6 +618,16 @@
         <td>0</td>
         <td>4</td>
         <td>0.0</td>
+      </tr>
+      
+      <tr>
+        <td class="strong"><a href="#c50e791ba1415d6229bb4f67021643c50a676e12" class="src_link" title="app/serializers/merchant_serializer.rb">app/serializers/merchant_serializer.rb</a></td>
+        <td class="green strong">100.0 %</td>
+        <td>4</td>
+        <td>3</td>
+        <td>3</td>
+        <td>0</td>
+        <td>1.0</td>
       </tr>
       
     </tbody>
@@ -740,7 +760,7 @@
         <li class="covered" data-hits="2" data-linenumber="3">
           <span class="hits">2</span>
           
-          <code class="ruby">    render json: Merchant.order(Arel.sql(&quot;RANDOM()&quot;)).limit(1).first</code>
+          <code class="ruby">    render json: MerchantSerializer.new(Merchant.order(Arel.sql(&quot;RANDOM()&quot;)).limit(1).first)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="4">
@@ -789,7 +809,7 @@
         <li class="covered" data-hits="4" data-linenumber="3">
           <span class="hits">4</span>
           
-          <code class="ruby">    render json: Merchant.where(merchant_params)</code>
+          <code class="ruby">    render json: MerchantSerializer.new(Merchant.where(merchant_params))</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="4">
@@ -813,7 +833,7 @@
         <li class="covered" data-hits="4" data-linenumber="7">
           <span class="hits">4</span>
           
-          <code class="ruby">    render json: Merchant.find_by(merchant_params)</code>
+          <code class="ruby">    render json: MerchantSerializer.new(Merchant.find_by(merchant_params))</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="8">
@@ -898,7 +918,7 @@
         <li class="covered" data-hits="1" data-linenumber="3">
           <span class="hits">1</span>
           
-          <code class="ruby">    render json: Merchant.all</code>
+          <code class="ruby">    render json: MerchantSerializer.new(Merchant.all)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="4">
@@ -922,7 +942,7 @@
         <li class="covered" data-hits="1" data-linenumber="7">
           <span class="hits">1</span>
           
-          <code class="ruby">    render json: Merchant.find(params[:id])</code>
+          <code class="ruby">    render json: MerchantSerializer.new(Merchant.find(params[:id]))</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="8">
@@ -1338,6 +1358,49 @@
         </li>
       
         <li class="never" data-hits="" data-linenumber="3">
+          
+          
+          <code class="ruby">end</code>
+        </li>
+      
+    </ol>
+  </pre>
+</div>
+
+      
+        <div class="source_table" id="c50e791ba1415d6229bb4f67021643c50a676e12">
+  <div class="header">
+    <h3>app/serializers/merchant_serializer.rb</h3>
+    <h4><span class="green">100.0 %</span> covered</h4>
+    <div>
+      <b>3</b> relevant lines. 
+      <span class="green"><b>3</b> lines covered</span> and
+      <span class="red"><b>0</b> lines missed.</span>
+    </div>
+  </div>
+  
+  <pre>
+    <ol>
+      
+        <li class="covered" data-hits="1" data-linenumber="1">
+          <span class="hits">1</span>
+          
+          <code class="ruby">class MerchantSerializer</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="2">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  include FastJsonapi::ObjectSerializer</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="3">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  attributes :name, :created_at, :updated_at</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="4">
           
           
           <code class="ruby">end</code>
