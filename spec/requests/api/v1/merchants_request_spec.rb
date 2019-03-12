@@ -131,6 +131,8 @@ describe "Merchants API" do
   end
 
   it 'can get the top x merchants ranked by total revenue' do
+    
 
+    get "/api/v1/merchants/most_revenue?quantity=x"
   end
 end
