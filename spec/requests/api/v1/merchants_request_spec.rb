@@ -109,4 +109,24 @@ describe "Merchants API" do
     expect(merchants[1]["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
     expect(merchants.count).to eq(2)
   end
+
+  it 'can return a random merchant' do
+    id = create(:merchant).id
+
+    get "/api/v1/merchants/random"
+
+    merchant = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchant["id"]).to eq(id)
+
+    id_2 = create(:merchant).id
+
+    get "/api/v1/merchants/random"
+
+    merchant = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchant["id"]).to eq(id || id_2)
+  end
 end
