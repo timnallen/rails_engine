@@ -133,13 +133,13 @@ describe "Merchants API" do
   it 'can get the top x merchants ranked by total revenue' do
     customer = create(:customer)
     merchant_1 = create(:merchant, name: "M1")
-    item_1 = create(:item, merchant: merchant_1, quantity: 10, unit_price: 100)
-    item_2 = create(:item, merchant: merchant_1, quantity: 10, unit_price: 200)
-    item_3 = create(:item, merchant: merchant_1, quantity: 10, unit_price: 300)
+    item_1 = create(:item, merchant: merchant_1, unit_price: 100)
+    item_2 = create(:item, merchant: merchant_1, unit_price: 200)
+    item_3 = create(:item, merchant: merchant_1, unit_price: 300)
     invoice_1 = create(:invoice, merchant: merchant_1, customer: customer)
-    create(:invoice_item, item: item_1, invoice: invoice_1, unit_price: item_1.unit_price)
-    create(:invoice_item, item: item_2, invoice: invoice_1, unit_price: item_2.unit_price)
-    create(:invoice_item, item: item_3, invoice: invoice_1, unit_price: item_3.unit_price)
+    create(:invoice_item, item: item_1, invoice: invoice_1, quantity: 10, unit_price: item_1.unit_price)
+    create(:invoice_item, item: item_2, invoice: invoice_1, quantity: 10, unit_price: item_2.unit_price)
+    create(:invoice_item, item: item_3, invoice: invoice_1, quantity: 10, unit_price: item_3.unit_price)
     merchant_2 = create(:merchant, name: "M2")
     item_4 = create(:item, merchant: merchant_2, unit_price: 400)
     item_5 = create(:item, merchant: merchant_2, unit_price: 500)
@@ -164,6 +164,22 @@ describe "Merchants API" do
     create(:invoice_item, item: item_10, invoice: invoice_4, unit_price: item_10.unit_price)
     create(:invoice_item, item: item_11, invoice: invoice_4, unit_price: item_11.unit_price)
     create(:invoice_item, item: item_12, invoice: invoice_4, unit_price: item_12.unit_price)
+    create(:transaction, invoice: invoice_1)
+    create(:transaction, invoice: invoice_2)
+    create(:transaction, invoice: invoice_3)
+    create(:transaction, invoice: invoice_4, result: 'failed')
+
+    get "/api/v1/merchants/most_revenue?quantity=3"
+
+    merchants = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(merchants['data'].count).to eq(3)
+    expect(merchants['data'][0]['attributes']['name']).to eq("M1")
+    expect(merchants['data'][1]['attributes']['name']).to eq("M3")
+    expect(merchants['data'][2]['attributes']['name']).to eq("M2")
+
+    create(:transaction, credit_card_number: '0987654312345678', invoice: invoice_4, result: 'success')
 
     get "/api/v1/merchants/most_revenue?quantity=3"
 
