@@ -1,2 +1,32 @@
 class Merchant < ApplicationRecord
+  has_many :invoices
+  has_many :items
+
+  validates_presence_of :name
+
+  def self.merchants_by_revenue(limit)
+    Merchant.joins(invoices: [:invoice_items, :transactions])
+            .select("merchants.*, SUM(invoice_items.quantity*invoice_items.unit_price) as total_revenue")
+            .merge(Transaction.unscoped.successful)
+            .group(:id)
+            .order("total_revenue desc")
+            .limit(limit)
+  end
+
+  def self.merchants_by_items(limit)
+    Merchant.joins(invoices: [:invoice_items, :transactions])
+            .select("merchants.*, SUM(invoice_items.quantity) as total_items")
+            .merge(Transaction.unscoped.successful)
+            .group(:id)
+            .order("total_items desc")
+            .limit(limit)
+  end
+
+  def self.revenue_by_date(date)
+    Merchant.joins(invoices: [:invoice_items, :transactions])
+            .select("SUM(invoice_items.quantity*invoice_items.unit_price) as revenue")
+            .merge(Transaction.unscoped.successful)
+            .where("DATE(transactions.created_at) = ?", date)
+            .group("DATE(transactions.created_at)")[0]
+  end
 end
