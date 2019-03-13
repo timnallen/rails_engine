@@ -46,7 +46,7 @@ RSpec.describe Merchant, type: :model do
       create(:invoice_item, item: @item_11, invoice: @invoice_4, unit_price: @item_11.unit_price)
       create(:invoice_item, item: @item_12, invoice: @invoice_4, unit_price: @item_12.unit_price)
       @transaction_1 = create(:transaction, created_at: "2012-03-27 14:54:05 UTC", invoice: @invoice_1)
-      @transaction_2 = create(:transaction, created_at: "2012-03-27 14:54:05 UTC", invoice: @invoice_2)
+      @transaction_2 = create(:transaction, created_at: "2012-03-27 17:54:05 UTC", invoice: @invoice_2)
       @transaction_3 = create(:transaction, invoice: @invoice_3)
       @transaction_4 = create(:transaction, invoice: @invoice_4, result: 'failed')
     end
