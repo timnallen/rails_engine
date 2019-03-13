@@ -173,74 +173,106 @@ describe "Merchants API" do
       @transaction_4 = create(:transaction, invoice: @invoice_4, result: 'failed')
     end
 
-    it 'can get the top x merchants ranked by total revenue' do
-      get "/api/v1/merchants/most_revenue?quantity=3"
+    describe 'All Merchants' do
+      it 'can get the top x merchants ranked by total revenue' do
+        get "/api/v1/merchants/most_revenue?quantity=3"
 
-      merchants = JSON.parse(response.body)
+        merchants = JSON.parse(response.body)
 
-      expect(response).to be_successful
-      expect(merchants['data'].count).to eq(3)
-      expect(merchants['data'][0]['attributes']['name']).to eq("M1")
-      expect(merchants['data'][1]['attributes']['name']).to eq("M3")
-      expect(merchants['data'][2]['attributes']['name']).to eq("M2")
+        expect(response).to be_successful
+        expect(merchants['data'].count).to eq(3)
+        expect(merchants['data'][0]['attributes']['name']).to eq("M1")
+        expect(merchants['data'][1]['attributes']['name']).to eq("M3")
+        expect(merchants['data'][2]['attributes']['name']).to eq("M2")
 
-      create(:transaction, credit_card_number: '0987654312345678', invoice: @invoice_4, result: 'success')
+        create(:transaction, credit_card_number: '0987654312345678', invoice: @invoice_4, result: 'success')
 
-      get "/api/v1/merchants/most_revenue?quantity=3"
+        get "/api/v1/merchants/most_revenue?quantity=3"
 
-      merchants = JSON.parse(response.body)
+        merchants = JSON.parse(response.body)
 
-      expect(response).to be_successful
-      expect(merchants['data'].count).to eq(3)
-      expect(merchants['data'][0]['attributes']['name']).to eq("M1")
-      expect(merchants['data'][1]['attributes']['name']).to eq("M4")
-      expect(merchants['data'][2]['attributes']['name']).to eq("M3")
+        expect(response).to be_successful
+        expect(merchants['data'].count).to eq(3)
+        expect(merchants['data'][0]['attributes']['name']).to eq("M1")
+        expect(merchants['data'][1]['attributes']['name']).to eq("M4")
+        expect(merchants['data'][2]['attributes']['name']).to eq("M3")
+      end
+
+      it 'can get the top x merchants ranked by total items' do
+        customer_2 = create(:customer)
+        invoice_5 = create(:invoice, merchant: @merchant_2, customer: customer_2)
+        invoice_6 = create(:invoice, merchant: @merchant_3, customer: customer_2)
+        invoice_7 = create(:invoice, merchant: @merchant_4, customer: customer_2)
+        create(:invoice_item, item: @item_4, invoice: invoice_5, quantity: 2, unit_price: @item_4.unit_price)
+        create(:invoice_item, item: @item_8, invoice: invoice_6, quantity: 1, unit_price: @item_8.unit_price)
+        create(:invoice_item, item: @item_10, invoice: invoice_7, quantity: 6, unit_price: @item_10.unit_price)
+        create(:transaction, invoice: invoice_5)
+        create(:transaction, invoice: invoice_6)
+        create(:transaction, invoice: invoice_7, result: 'failed')
+
+        get "/api/v1/merchants/most_items?quantity=3"
+
+        merchants = JSON.parse(response.body)
+
+        expect(response).to be_successful
+        expect(merchants['data'].count).to eq(3)
+        expect(merchants['data'][0]['attributes']['name']).to eq("M1")
+        expect(merchants['data'][1]['attributes']['name']).to eq("M2")
+        expect(merchants['data'][2]['attributes']['name']).to eq("M3")
+
+        create(:transaction, invoice: invoice_7, result: 'success')
+
+        get "/api/v1/merchants/most_items?quantity=3"
+
+        merchants = JSON.parse(response.body)
+
+        expect(response).to be_successful
+        expect(merchants['data'].count).to eq(3)
+        expect(merchants['data'][0]['attributes']['name']).to eq("M1")
+        expect(merchants['data'][1]['attributes']['name']).to eq("M4")
+        expect(merchants['data'][2]['attributes']['name']).to eq("M2")
+      end
+
+      it 'can get the total revenue for date x across all merchants' do
+        date = @invoice_1.created_at.to_s[0..9]
+
+        get "/api/v1/merchants/revenue?date=#{date}"
+
+        revenue = JSON.parse(response.body)
+
+        expect(response).to be_successful
+        expect(revenue['data']['attributes']['total_revenue']).to eq("75.00")
+      end
     end
 
-    it 'can get the top x merchants ranked by total items' do
-      customer_2 = create(:customer)
-      invoice_5 = create(:invoice, merchant: @merchant_2, customer: customer_2)
-      invoice_6 = create(:invoice, merchant: @merchant_3, customer: customer_2)
-      invoice_7 = create(:invoice, merchant: @merchant_4, customer: customer_2)
-      create(:invoice_item, item: @item_4, invoice: invoice_5, quantity: 2, unit_price: @item_4.unit_price)
-      create(:invoice_item, item: @item_8, invoice: invoice_6, quantity: 1, unit_price: @item_8.unit_price)
-      create(:invoice_item, item: @item_10, invoice: invoice_7, quantity: 6, unit_price: @item_10.unit_price)
-      create(:transaction, invoice: invoice_5)
-      create(:transaction, invoice: invoice_6)
-      create(:transaction, invoice: invoice_7, result: 'failed')
+    describe "One Merchant" do
+      it 'can get the total revenue for that merchant across successful transactions' do
+        invoice_5 = create(:invoice, merchant: @merchant_4, customer: @customer)
+        create(:invoice_item, item: @item_11, invoice: invoice_5, unit_price: @item_11.unit_price)
+        create(:invoice_item, item: @item_12, invoice: invoice_5, unit_price: @item_12.unit_price)
+        create(:transaction, invoice: invoice_5, result: "success")
 
-      get "/api/v1/merchants/most_items?quantity=3"
+        get "/api/v1/merchants/#{@merchant_4.id}/revenue"
 
-      merchants = JSON.parse(response.body)
+        revenue = JSON.parse(response.body)['data']
 
-      expect(response).to be_successful
-      expect(merchants['data'].count).to eq(3)
-      expect(merchants['data'][0]['attributes']['name']).to eq("M1")
-      expect(merchants['data'][1]['attributes']['name']).to eq("M2")
-      expect(merchants['data'][2]['attributes']['name']).to eq("M3")
+        expect(response).to be_successful
+        expect(revenue['attributes']).to eq({'total_revenue' => "23.00"})
+      end
 
-      create(:transaction, invoice: invoice_7, result: 'success')
+      it 'can get the total revenue for that merchant across successful transactions for one date' do
+        invoice_5 = create(:invoice, merchant: @merchant_4, customer: @customer)
+        create(:invoice_item, item: @item_11, invoice: invoice_5, unit_price: @item_11.unit_price)
+        create(:invoice_item, item: @item_12, invoice: invoice_5, unit_price: @item_12.unit_price)
+        create(:transaction, invoice: invoice_5, result: "success")
 
-      get "/api/v1/merchants/most_items?quantity=3"
+        get "/api/v1/merchants/#{@merchant_4.id}/revenue"
 
-      merchants = JSON.parse(response.body)
+        revenue = JSON.parse(response.body)['data']
 
-      expect(response).to be_successful
-      expect(merchants['data'].count).to eq(3)
-      expect(merchants['data'][0]['attributes']['name']).to eq("M1")
-      expect(merchants['data'][1]['attributes']['name']).to eq("M4")
-      expect(merchants['data'][2]['attributes']['name']).to eq("M2")
-    end
-
-    it 'can get the total revenue for date x across all merchants' do
-      date = @invoice_1.created_at.to_s[0..9]
-
-      get "/api/v1/merchants/revenue?date=#{date}"
-
-      revenue = JSON.parse(response.body)
-
-      expect(response).to be_successful
-      expect(revenue['data']['attributes']['total_revenue']).to eq("75.00")
+        expect(response).to be_successful
+        expect(revenue['attributes']).to eq({'total_revenue' => "23.00"})
+      end
     end
   end
 end

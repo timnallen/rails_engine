@@ -10,7 +10,7 @@ RSpec.describe Merchant, type: :model do
     it {should have_many :invoices}
   end
 
-  describe 'class methods' do
+  describe 'methods' do
     before :each do
       @customer = create(:customer)
       @merchant_1 = create(:merchant, name: "M1")
@@ -51,28 +51,41 @@ RSpec.describe Merchant, type: :model do
       @transaction_4 = create(:transaction, invoice: @invoice_4, result: 'failed')
     end
 
-    it '::merchants_by_revenue' do
-      expect(Merchant.merchants_by_revenue(3)).to eq([@merchant_1, @merchant_3, @merchant_2])
+    describe 'class' do
+      it '::merchants_by_revenue' do
+        expect(Merchant.merchants_by_revenue(3)).to eq([@merchant_1, @merchant_3, @merchant_2])
+      end
+
+      it '::merchants_by_items' do
+        customer_2 = create(:customer)
+        invoice_5 = create(:invoice, merchant: @merchant_2, customer: customer_2)
+        invoice_6 = create(:invoice, merchant: @merchant_3, customer: customer_2)
+        invoice_7 = create(:invoice, merchant: @merchant_4, customer: customer_2)
+        create(:invoice_item, item: @item_4, invoice: invoice_5, quantity: 2, unit_price: @item_4.unit_price)
+        create(:invoice_item, item: @item_8, invoice: invoice_6, quantity: 1, unit_price: @item_8.unit_price)
+        create(:invoice_item, item: @item_10, invoice: invoice_7, quantity: 6, unit_price: @item_10.unit_price)
+        create(:transaction, invoice: invoice_5)
+        create(:transaction, invoice: invoice_6)
+        create(:transaction, invoice: invoice_7)
+
+        expect(Merchant.merchants_by_items(3)).to eq([@merchant_1, @merchant_4, @merchant_2])
+      end
+
+      it '::revenue_by_date' do
+        date = @invoice_1.created_at
+        expect(Merchant.revenue_by_date(date).total_revenue).to eq(7500)
+      end
     end
 
-    it '::merchants_by_items' do
-      customer_2 = create(:customer)
-      invoice_5 = create(:invoice, merchant: @merchant_2, customer: customer_2)
-      invoice_6 = create(:invoice, merchant: @merchant_3, customer: customer_2)
-      invoice_7 = create(:invoice, merchant: @merchant_4, customer: customer_2)
-      create(:invoice_item, item: @item_4, invoice: invoice_5, quantity: 2, unit_price: @item_4.unit_price)
-      create(:invoice_item, item: @item_8, invoice: invoice_6, quantity: 1, unit_price: @item_8.unit_price)
-      create(:invoice_item, item: @item_10, invoice: invoice_7, quantity: 6, unit_price: @item_10.unit_price)
-      create(:transaction, invoice: invoice_5)
-      create(:transaction, invoice: invoice_6)
-      create(:transaction, invoice: invoice_7)
+    describe 'instance' do
+      it '#revenue' do
+        invoice_5 = create(:invoice, merchant: @merchant_4, customer: @customer)
+        create(:invoice_item, item: @item_11, invoice: invoice_5, unit_price: @item_11.unit_price)
+        create(:invoice_item, item: @item_12, invoice: invoice_5, unit_price: @item_12.unit_price)
+        create(:transaction, invoice: invoice_5, result: "success")
 
-      expect(Merchant.merchants_by_items(3)).to eq([@merchant_1, @merchant_4, @merchant_2])
-    end
-
-    it '::revenue_by_date' do
-      date = @invoice_1.created_at
-      expect(Merchant.revenue_by_date(date).revenue).to eq(7500)
+        expect(@merchant_4.revenue.total_revenue).to eq(2300)
+      end
     end
   end
 end
