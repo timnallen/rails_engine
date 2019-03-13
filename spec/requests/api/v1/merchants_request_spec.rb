@@ -261,12 +261,17 @@ describe "Merchants API" do
       end
 
       it 'can get the total revenue for that merchant across successful transactions for one date' do
-        invoice_5 = create(:invoice, merchant: @merchant_4, customer: @customer)
+        invoice_5 = create(:invoice, merchant: @merchant_4, created_at: "2012-03-16", customer: @customer)
         create(:invoice_item, item: @item_11, invoice: invoice_5, unit_price: @item_11.unit_price)
         create(:invoice_item, item: @item_12, invoice: invoice_5, unit_price: @item_12.unit_price)
         create(:transaction, invoice: invoice_5, result: "success")
 
-        get "/api/v1/merchants/#{@merchant_4.id}/revenue"
+        invoice_6 = create(:invoice, merchant: @merchant_4, created_at: "2012-03-28", customer: @customer)
+        create(:invoice_item, item: @item_10, invoice: invoice_6, unit_price: @item_10.unit_price)
+        create(:invoice_item, item: @item_11, invoice: invoice_6, unit_price: @item_12.unit_price)
+        create(:transaction, invoice: invoice_6, result: "success")
+
+        get "/api/v1/merchants/#{@merchant_4.id}/revenue?date=#{invoice_5.created_at}"
 
         revenue = JSON.parse(response.body)['data']
 
