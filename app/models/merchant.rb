@@ -26,7 +26,7 @@ class Merchant < ApplicationRecord
     Merchant.joins(invoices: [:invoice_items, :transactions])
             .select("SUM(invoice_items.quantity*invoice_items.unit_price) as revenue")
             .merge(Transaction.unscoped.successful)
-            .where("DATE(transactions.created_at) = ?", date)
-            .group("DATE(transactions.created_at)")[0]
+            .where("DATE(invoices.created_at) = ?", date)
+            .group("DATE(invoices.created_at)")[0]
   end
 end
