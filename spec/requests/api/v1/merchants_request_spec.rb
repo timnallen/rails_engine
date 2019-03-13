@@ -167,10 +167,10 @@ describe "Merchants API" do
       create(:invoice_item, item: @item_10, invoice: @invoice_4, unit_price: @item_10.unit_price)
       create(:invoice_item, item: @item_11, invoice: @invoice_4, unit_price: @item_11.unit_price)
       create(:invoice_item, item: @item_12, invoice: @invoice_4, unit_price: @item_12.unit_price)
-      create(:transaction, invoice: @invoice_1)
-      create(:transaction, invoice: @invoice_2)
-      create(:transaction, invoice: @invoice_3)
-      create(:transaction, invoice: @invoice_4, result: 'failed')
+      @transaction_1 = create(:transaction, created_at: "2012-03-27 14:54:05 UTC", invoice: @invoice_1)
+      @transaction_2 = create(:transaction, created_at: "2012-03-27 14:54:05 UTC", invoice: @invoice_2)
+      @transaction_3 = create(:transaction, invoice: @invoice_3)
+      @transaction_4 = create(:transaction, invoice: @invoice_4, result: 'failed')
     end
 
     it 'can get the top x merchants ranked by total revenue' do
@@ -230,6 +230,17 @@ describe "Merchants API" do
       expect(merchants['data'][0]['attributes']['name']).to eq("M1")
       expect(merchants['data'][1]['attributes']['name']).to eq("M4")
       expect(merchants['data'][2]['attributes']['name']).to eq("M2")
+    end
+
+    it 'can get the total revenue for date x across all merchants' do
+      created_at = @transaction_1.created_at
+
+      get "/api/v1/merchants/revenue?date=#{created_at}"
+
+      revenue = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(revenue['data']['attributes']['revenue']).to eq("75.00")
     end
   end
 end

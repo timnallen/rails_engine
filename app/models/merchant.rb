@@ -5,9 +5,8 @@ class Merchant < ApplicationRecord
   validates_presence_of :name
 
   def self.merchants_by_revenue(limit)
-    Merchant.joins(invoices: :invoice_items)
+    Merchant.joins(invoices: [:invoice_items, :transactions])
             .select("merchants.*, SUM(invoice_items.quantity*invoice_items.unit_price) as total_revenue")
-            .joins(invoices: :transactions)
             .where(transactions: {result: "success"})
             .group(:id)
             .order("total_revenue desc")
@@ -15,12 +14,18 @@ class Merchant < ApplicationRecord
   end
 
   def self.merchants_by_items(limit)
-    Merchant.joins(invoices: :invoice_items)
+    Merchant.joins(invoices: [:invoice_items, :transactions])
             .select("merchants.*, SUM(invoice_items.quantity) as total_items")
-            .joins(invoices: :transactions)
             .where(transactions: {result: "success"})
             .group(:id)
             .order("total_items desc")
             .limit(limit)
+  end
+
+  def self.revenue_by_date(date)
+    Merchant.joins(invoices: [:invoice_items, :transactions])
+            .select("SUM(invoice_items.quantity*invoice_items.unit_price) as total_revenue")
+            .where(transactions: {result: "success", created_at: date})
+            .group("transactions.created_at")[0]
   end
 end

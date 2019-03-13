@@ -45,10 +45,10 @@ RSpec.describe Merchant, type: :model do
       create(:invoice_item, item: @item_10, invoice: @invoice_4, unit_price: @item_10.unit_price)
       create(:invoice_item, item: @item_11, invoice: @invoice_4, unit_price: @item_11.unit_price)
       create(:invoice_item, item: @item_12, invoice: @invoice_4, unit_price: @item_12.unit_price)
-      create(:transaction, invoice: @invoice_1)
-      create(:transaction, invoice: @invoice_2)
-      create(:transaction, invoice: @invoice_3)
-      create(:transaction, invoice: @invoice_4, result: 'failed')
+      @transaction_1 = create(:transaction, created_at: "2012-03-27 14:54:05 UTC", invoice: @invoice_1)
+      @transaction_2 = create(:transaction, created_at: "2012-03-27 14:54:05 UTC", invoice: @invoice_2)
+      @transaction_3 = create(:transaction, invoice: @invoice_3)
+      @transaction_4 = create(:transaction, invoice: @invoice_4, result: 'failed')
     end
 
     it '::merchants_by_revenue' do
@@ -68,6 +68,11 @@ RSpec.describe Merchant, type: :model do
       create(:transaction, invoice: invoice_7)
 
       expect(Merchant.merchants_by_items(3)).to eq([@merchant_1, @merchant_4, @merchant_2])
+    end
+
+    it '::revenue_by_date' do
+      date = @transaction_1.created_at
+      expect(Merchant.revenue_by_date(date).total_revenue).to eq(7500)
     end
   end
 end
