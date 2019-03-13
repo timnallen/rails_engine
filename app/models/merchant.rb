@@ -7,7 +7,7 @@ class Merchant < ApplicationRecord
   def self.merchants_by_revenue(limit)
     Merchant.joins(invoices: [:invoice_items, :transactions])
             .select("merchants.*, SUM(invoice_items.quantity*invoice_items.unit_price) as total_revenue")
-            .where(transactions: {result: "success"})
+            .merge(Transaction.unscoped.successful)
             .group(:id)
             .order("total_revenue desc")
             .limit(limit)
@@ -16,7 +16,7 @@ class Merchant < ApplicationRecord
   def self.merchants_by_items(limit)
     Merchant.joins(invoices: [:invoice_items, :transactions])
             .select("merchants.*, SUM(invoice_items.quantity) as total_items")
-            .where(transactions: {result: "success"})
+            .merge(Transaction.unscoped.successful)
             .group(:id)
             .order("total_items desc")
             .limit(limit)
@@ -25,7 +25,8 @@ class Merchant < ApplicationRecord
   def self.revenue_by_date(date)
     Merchant.joins(invoices: [:invoice_items, :transactions])
             .select("SUM(invoice_items.quantity*invoice_items.unit_price) as total_revenue")
-            .where(transactions: {result: "success", created_at: date})
+            .merge(Transaction.unscoped.successful)
+            .where(transactions: {created_at: date})
             .group("transactions.created_at")[0]
   end
 end
