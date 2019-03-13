@@ -46,25 +46,26 @@ describe "Merchants API" do
     end
 
     it "can get one merchant by searching its created_at date" do
-      created_at = create(:merchant, created_at: "2012-03-27 14:54:05 UTC").created_at
+      created_at = create(:merchant, name: "This One!", created_at: "2012-03-27 14:54:05 UTC").created_at
+      create_list(:merchant, 3)
 
       get "/api/v1/merchants/find?created_at=#{created_at}"
 
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchant['data']['attributes']["created_at"]).to eq("2012-03-27T14:54:05.000Z")
+      expect(merchant['data']['attributes']["name"]).to eq("This One!")
     end
 
     it "can get one merchant by searching its updated_at date" do
-      updated_at = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC").updated_at
+      updated_at = create(:merchant, name: "This One, Also!", updated_at: "2012-03-27 14:54:05 UTC").updated_at
 
       get "/api/v1/merchants/find?updated_at=#{updated_at}"
 
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchant['data']['attributes']["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
+      expect(merchant['data']['attributes']["name"]).to eq("This One, Also!")
     end
 
     it 'can get all merchants by searching by id or name' do
@@ -90,24 +91,24 @@ describe "Merchants API" do
     end
 
     it 'can get all merchants by searching by created_at or updated_at' do
-      created_at = create(:merchant, created_at: "2012-03-27 14:54:05 UTC", updated_at: "2012-03-27 14:54:05 UTC".to_datetime).created_at
+      created_at = create(:merchant, name: "This", created_at: "2012-03-27 14:54:05 UTC", updated_at: "2012-03-27 14:54:05 UTC".to_datetime).created_at
 
       get "/api/v1/merchants/find_all?created_at=#{created_at}"
 
       merchants = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchants['data'][0]['attributes']["created_at"]).to eq("2012-03-27T14:54:05.000Z")
+      expect(merchants['data'][0]['attributes']["name"]).to eq("This")
 
-      updated_at = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC").updated_at
+      updated_at = create(:merchant, name: "That", updated_at: "2012-03-27 14:54:05 UTC").updated_at
 
       get "/api/v1/merchants/find_all?updated_at=#{updated_at}"
 
       merchants = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchants['data'][0]['attributes']["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
-      expect(merchants['data'][1]['attributes']["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
+      expect(merchants['data'][0]['attributes']["name"]).to eq("This")
+      expect(merchants['data'][1]['attributes']["name"]).to eq("That")
       expect(merchants['data'].count).to eq(2)
     end
 

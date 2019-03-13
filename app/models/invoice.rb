@@ -5,7 +5,6 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items
   has_many :transactions
 
-  validates_presence_of :name
   validates_presence_of :customer
   validates_presence_of :merchant
   validates_presence_of :status
