@@ -233,14 +233,14 @@ describe "Merchants API" do
     end
 
     it 'can get the total revenue for date x across all merchants' do
-      created_at = @transaction_1.created_at
+      date = @transaction_1.created_at.to_s[0..9]
 
-      get "/api/v1/merchants/revenue?date=#{created_at}"
+      get "/api/v1/merchants/revenue?date=#{date}"
 
       revenue = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(revenue['data']['attributes']['revenue']).to eq("75.00")
+      expect(revenue['data']['attributes']['total_revenue']).to eq("75.00")
     end
   end
 end

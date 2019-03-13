@@ -72,7 +72,7 @@ RSpec.describe Merchant, type: :model do
 
     it '::revenue_by_date' do
       date = @transaction_1.created_at
-      expect(Merchant.revenue_by_date(date).total_revenue).to eq(7500)
+      expect(Merchant.revenue_by_date(date).revenue).to eq(7500)
     end
   end
 end
