@@ -14,7 +14,7 @@ RSpec.describe Item, type: :model do
     it {should belong_to :merchant}
   end
 
-  describe 'class methods' do
+  describe 'methods' do
     before :each do
       @customer = create(:customer)
       @merchant_1 = create(:merchant, name: "M1")
@@ -55,20 +55,37 @@ RSpec.describe Item, type: :model do
       @transaction_4 = create(:transaction, invoice: @invoice_4, result: 'failed')
     end
 
-    it '::by_revenue' do
-      expect(Item.by_revenue(4)).to eq([@item_3, @item_2, @item_1, @item_9])
+    describe 'class' do
+      it '::by_revenue' do
+        expect(Item.by_revenue(4)).to eq([@item_3, @item_2, @item_1, @item_9])
+      end
+
+      it '::by_items_sold' do
+        @invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer)
+        create(:invoice_item, invoice: @invoice_5, item: @item_1, quantity: 5)
+        create(:invoice_item, invoice: @invoice_5, item: @item_2, quantity: 3)
+        @invoice_6 = create(:invoice, merchant: @merchant_3, customer: @customer)
+        create(:invoice_item, invoice: @invoice_6, item: @item_7, quantity: 3)
+        create(:transaction, invoice: @invoice_5)
+        create(:transaction, invoice: @invoice_6)
+
+        expect(Item.by_items_sold(4)).to eq([@item_1, @item_2, @item_3, @item_7])
+      end
     end
 
-    it '::by_items_sold' do
-      @invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer)
-      create(:invoice_item, invoice: @invoice_5, item: @item_1, quantity: 5)
-      create(:invoice_item, invoice: @invoice_5, item: @item_2, quantity: 3)
-      @invoice_6 = create(:invoice, merchant: @merchant_3, customer: @customer)
-      create(:invoice_item, invoice: @invoice_6, item: @item_7, quantity: 3)
-      create(:transaction, invoice: @invoice_5)
-      create(:transaction, invoice: @invoice_6)
+    describe 'instance' do
+      it '#best_day' do
+        invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
+        create(:invoice_item, invoice: invoice_5, item: @item_1)
+        invoice_6 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
+        create(:invoice_item, invoice: invoice_6, item: @item_1)
+        invoice_7 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
+        create(:invoice_item, invoice: invoice_7, item: @item_1)
+        invoice_8 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-27 14:54:05 UTC")
+        create(:invoice_item, invoice: invoice_8, item: @item_1)
 
-      expect(Item.by_items_sold(4)).to eq([@item_1, @item_2, @item_3, @item_7])
+        expect(@item_1.best_day.created_at).to eq("2012-03-23T10:55:29.000Z")
+      end
     end
   end
 end
