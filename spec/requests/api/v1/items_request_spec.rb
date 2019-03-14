@@ -56,8 +56,8 @@ describe "Items API" do
       expect(response).to be_successful
       expect(items[0]['id']).to eq(@item_3.id.to_s)
       expect(items[1]['id']).to eq(@item_2.id.to_s)
-      expect(items[2]['id']).to eq(@item_12.id.to_s)
-      expect(items[3]['id']).to eq(@item_11.id.to_s)
+      expect(items[2]['id']).to eq(@item_1.id.to_s)
+      expect(items[3]['id']).to eq(@item_9.id.to_s)
     end
   end
 end
