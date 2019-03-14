@@ -1,20 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Item, type: :model do
-  describe 'validations' do
-    it {should validate_presence_of :name}
-    it {should validate_presence_of :description}
-    it {should validate_presence_of :merchant}
-    it {should validate_presence_of :unit_price}
+describe "Items API" do
+  describe 'record endpoints' do
   end
 
-  describe 'relationships' do
-    it {should have_many :invoice_items}
-    it {should have_many :invoices}
-    it {should belong_to :merchant}
+  describe 'relationship endpoints' do
   end
 
-  describe 'methods' do
+  describe 'business intelligence' do
     before :each do
       @customer = create(:customer)
       @merchant_1 = create(:merchant, name: "M1")
@@ -55,37 +48,54 @@ RSpec.describe Item, type: :model do
       @transaction_4 = create(:transaction, invoice: @invoice_4, result: 'failed')
     end
 
-    describe 'class' do
-      it '::by_revenue' do
-        expect(Item.by_revenue(4)).to eq([@item_3, @item_2, @item_1, @item_9])
-      end
+    it 'gets the top x items ranked by revenue generated' do
+      get '/api/v1/items/most_revenue?quantity=4'
 
-      it '::by_items_sold' do
-        @invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer)
-        create(:invoice_item, invoice: @invoice_5, item: @item_1, quantity: 5)
-        create(:invoice_item, invoice: @invoice_5, item: @item_2, quantity: 3)
-        @invoice_6 = create(:invoice, merchant: @merchant_3, customer: @customer)
-        create(:invoice_item, invoice: @invoice_6, item: @item_7, quantity: 3)
-        create(:transaction, invoice: @invoice_5)
-        create(:transaction, invoice: @invoice_6)
+      items = JSON.parse(response.body)['data']
 
-        expect(Item.by_items_sold(4)).to eq([@item_1, @item_2, @item_3, @item_7])
-      end
+      expect(response).to be_successful
+      expect(items[0]['id']).to eq(@item_3.id.to_s)
+      expect(items[1]['id']).to eq(@item_2.id.to_s)
+      expect(items[2]['id']).to eq(@item_1.id.to_s)
+      expect(items[3]['id']).to eq(@item_9.id.to_s)
     end
 
-    describe 'instance' do
-      it '#best_day' do
-        invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
-        create(:invoice_item, invoice: invoice_5, item: @item_1)
-        invoice_6 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
-        create(:invoice_item, invoice: invoice_6, item: @item_1)
-        invoice_7 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
-        create(:invoice_item, invoice: invoice_7, item: @item_1)
-        invoice_8 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-27 14:54:05 UTC")
-        create(:invoice_item, invoice: invoice_8, item: @item_1)
+    it 'gets the top x items ranked by items sold' do
+      invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer)
+      create(:invoice_item, invoice: invoice_5, item: @item_1, quantity: 5)
+      create(:invoice_item, invoice: invoice_5, item: @item_2, quantity: 3)
+      invoice_6 = create(:invoice, merchant: @merchant_3, customer: @customer)
+      create(:invoice_item, invoice: invoice_6, item: @item_7, quantity: 3)
+      create(:transaction, invoice: invoice_5)
+      create(:transaction, invoice: invoice_6)
 
-        expect(@item_1.best_day.created_at).to eq("2012-03-27T14:54:05.000Z")
-      end
+      get '/api/v1/items/most_items?quantity=4'
+
+      items = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(items[0]['id']).to eq(@item_1.id.to_s)
+      expect(items[1]['id']).to eq(@item_2.id.to_s)
+      expect(items[2]['id']).to eq(@item_3.id.to_s)
+      expect(items[3]['id']).to eq(@item_7.id.to_s)
+    end
+
+    it 'gets the date with the most sales for the given item' do
+      invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
+      create(:invoice_item, invoice: invoice_5, item: @item_1)
+      invoice_6 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
+      create(:invoice_item, invoice: invoice_6, item: @item_1)
+      invoice_7 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
+      create(:invoice_item, invoice: invoice_7, item: @item_1)
+      invoice_8 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-27 14:54:05 UTC")
+      create(:invoice_item, invoice: invoice_8, item: @item_1)
+
+      get "/api/v1/items/#{@item_1.id}/best_day"
+
+      date = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(date['attributes']['best_day']).to eq("2012-03-27T14:54:05.000Z")
     end
   end
 end

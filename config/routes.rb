@@ -15,6 +15,16 @@ Rails.application.routes.draw do
         get '/favorite_customer', to: 'favorite_customer#show'
         get '/customers_with_pending_invoices', to: 'pending_invoices#index'
       end
+      namespace :items do
+        get '/most_revenue', to: 'most_revenue#index'
+        get '/most_items', to: 'most_items#index'
+      end
+      resources :items, only: [:index, :show] do
+        get '/best_day', to: 'best_day#show'
+      end
+      resources :customers, only: [:index, :show] do
+        get '/favorite_merchant', to: 'favorite_merchant#show'
+      end
     end
   end
 end
