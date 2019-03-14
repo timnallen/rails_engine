@@ -61,13 +61,13 @@ describe "Items API" do
     end
 
     it 'gets the top x items ranked by items sold' do
-      @invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer)
-      create(:invoice_item, invoice: @invoice_5, item: @item_1, quantity: 5)
-      create(:invoice_item, invoice: @invoice_5, item: @item_2, quantity: 3)
-      @invoice_6 = create(:invoice, merchant: @merchant_3, customer: @customer)
-      create(:invoice_item, invoice: @invoice_6, item: @item_7, quantity: 3)
-      create(:transaction, invoice: @invoice_5)
-      create(:transaction, invoice: @invoice_6)
+      invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer)
+      create(:invoice_item, invoice: invoice_5, item: @item_1, quantity: 5)
+      create(:invoice_item, invoice: invoice_5, item: @item_2, quantity: 3)
+      invoice_6 = create(:invoice, merchant: @merchant_3, customer: @customer)
+      create(:invoice_item, invoice: invoice_6, item: @item_7, quantity: 3)
+      create(:transaction, invoice: invoice_5)
+      create(:transaction, invoice: invoice_6)
 
       get '/api/v1/items/most_items?quantity=4'
 
@@ -81,7 +81,21 @@ describe "Items API" do
     end
 
     it 'gets the date with the most sales for the given item' do
-      
+      invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
+      create(:invoice_item, invoice: invoice_5, item: @item_1)
+      invoice_6 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
+      create(:invoice_item, invoice: invoice_6, item: @item_1)
+      invoice_7 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-23T10:55:29.000Z")
+      create(:invoice_item, invoice: invoice_7, item: @item_1)
+      invoice_8 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-27 14:54:05 UTC")
+      create(:invoice_item, invoice: invoice_8, item: @item_1)
+
+      get '/api/v1/items/:id/best_day'
+
+      date = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(date['attributes']['best_day']).to eq("2012-03-23T10:55:29.000Z")
     end
   end
 end
