@@ -59,5 +59,25 @@ describe "Items API" do
       expect(items[2]['id']).to eq(@item_1.id.to_s)
       expect(items[3]['id']).to eq(@item_9.id.to_s)
     end
+
+    it 'gets the top x items ranked by items sold' do
+      @invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer)
+      create(:invoice_item, invoice: @invoice_5, item: @item_1, quantity: 5)
+      create(:invoice_item, invoice: @invoice_5, item: @item_2, quantity: 3)
+      @invoice_6 = create(:invoice, merchant: @merchant_3, customer: @customer)
+      create(:invoice_item, invoice: @invoice_6, item: @item_7, quantity: 3)
+      create(:transaction, invoice: @invoice_5)
+      create(:transaction, invoice: @invoice_6)
+
+      get '/api/v1/items/most_items?quantity=4'
+
+      items = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(items[0]['id']).to eq(@item_1.id.to_s)
+      expect(items[1]['id']).to eq(@item_2.id.to_s)
+      expect(items[2]['id']).to eq(@item_3.id.to_s)
+      expect(items[3]['id']).to eq(@item_7.id.to_s)
+    end
   end
 end
