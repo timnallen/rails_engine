@@ -58,5 +58,17 @@ RSpec.describe Item, type: :model do
     it '::by_revenue' do
       expect(Item.by_revenue(4)).to eq([@item_3, @item_2, @item_1, @item_9])
     end
+
+    it '::by_items_sold' do
+      @invoice_5 = create(:invoice, merchant: @merchant_1, customer: @customer)
+      create(:invoice_item, invoice: @invoice_5, item: @item_1, quantity: 5)
+      create(:invoice_item, invoice: @invoice_5, item: @item_2, quantity: 3)
+      @invoice_6 = create(:invoice, merchant: @merchant_3, customer: @customer)
+      create(:invoice_item, invoice: @invoice_6, item: @item_7, quantity: 3)
+      create(:transaction, invoice: @invoice_5)
+      create(:transaction, invoice: @invoice_6)
+
+      expect(Item.by_items_sold(4)).to eq([@item_1, @item_2, @item_3, @item_7])
+    end
   end
 end
