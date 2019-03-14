@@ -79,5 +79,9 @@ describe "Items API" do
       expect(items[2]['id']).to eq(@item_3.id.to_s)
       expect(items[3]['id']).to eq(@item_7.id.to_s)
     end
+
+    it 'gets the date with the most sales for the given item' do
+      
+    end
   end
 end
