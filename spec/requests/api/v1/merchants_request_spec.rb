@@ -268,7 +268,7 @@ describe "Merchants API" do
 
         invoice_6 = create(:invoice, merchant: @merchant_4, created_at: "2012-03-28", customer: @customer)
         create(:invoice_item, item: @item_10, invoice: invoice_6, unit_price: @item_10.unit_price)
-        create(:invoice_item, item: @item_11, invoice: invoice_6, unit_price: @item_12.unit_price)
+        create(:invoice_item, item: @item_12, invoice: invoice_6, unit_price: @item_12.unit_price)
         create(:transaction, invoice: invoice_6, result: "success")
 
         get "/api/v1/merchants/#{@merchant_4.id}/revenue?date=#{invoice_5.created_at}"
@@ -277,6 +277,32 @@ describe "Merchants API" do
 
         expect(response).to be_successful
         expect(revenue['attributes']).to eq({'total_revenue' => "23.00"})
+      end
+
+      it 'can get the customer with the most successful transactions' do
+        customer_2 = create(:customer, first_name: "Me", last_name: "Also me")
+        customer_3 = create(:customer)
+        invoice_5 = create(:invoice, merchant: @merchant_4, customer: customer_2)
+        invoice_6 = create(:invoice, merchant: @merchant_4, customer: customer_3)
+        invoice_7 = create(:invoice, merchant: @merchant_4, customer: customer_2)
+        create(:invoice_item, item: @item_11, invoice: invoice_5, unit_price: @item_11.unit_price)
+        create(:invoice_item, item: @item_11, invoice: invoice_6, unit_price: @item_11.unit_price)
+        create(:invoice_item, item: @item_12, invoice: invoice_7, unit_price: @item_12.unit_price)
+        create(:transaction, invoice: invoice_5, result: "success")
+        create(:transaction, invoice: invoice_6, result: "success")
+        create(:transaction, invoice: invoice_7, result: "success")
+        create(:transaction, invoice: @invoice_4, result: 'failed')
+        create(:transaction, invoice: @invoice_4, result: 'failed')
+        create(:transaction, invoice: @invoice_4, result: 'failed')
+        create(:transaction, invoice: @invoice_4, result: 'failed')
+
+
+        get "/api/v1/merchants/#{@merchant_4.id}/favorite_customer"
+
+        customer = JSON.parse(response.body)['data']
+
+        expect(response).to be_successful
+        expect(customer['attributes']).to eq({'first_name' => "Me", 'last_name' => "Also me"})
       end
     end
   end
