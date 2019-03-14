@@ -68,6 +68,15 @@
         null,
         2,
         null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2,
+        null,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/models/merchant.rb": [
@@ -137,9 +146,9 @@
         1,
         1,
         null,
-        20,
+        22,
         null,
-        136,
+        138,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/items/most_revenue_controller.rb": [
@@ -177,7 +186,10 @@
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/date_serializer.rb": [
         1,
         1,
+        null,
         1,
+        1,
+        null,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants_controller.rb": [
@@ -304,6 +316,6 @@
         0
       ]
     },
-    "timestamp": 1552587001
+    "timestamp": 1552596032
   }
 }
