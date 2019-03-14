@@ -10,7 +10,10 @@ Rails.application.routes.draw do
         get '/find_all', to: 'search#index'
         get 'random', to: 'random#show'
       end
-      resources :merchants, only: [:index, :show]
+      resources :merchants, only: [:index, :show] do
+        get '/revenue', to: 'revenue#show'
+        get '/favorite_customer', to: 'favorite_customer#show'
+      end
     end
   end
 end

@@ -24,9 +24,30 @@ class Merchant < ApplicationRecord
 
   def self.revenue_by_date(date)
     Merchant.joins(invoices: [:invoice_items, :transactions])
-            .select("SUM(invoice_items.quantity*invoice_items.unit_price) as revenue")
+            .select("SUM(invoice_items.quantity*invoice_items.unit_price) as total_revenue")
             .merge(Transaction.unscoped.successful)
-            .where("DATE(transactions.created_at) = ?", date)
-            .group("DATE(transactions.created_at)")[0]
+            .where("DATE(invoices.created_at) = ?", date)
+            .group("DATE(invoices.created_at)")[0]
+  end
+
+  def revenue(date=nil)
+    all_revenue = invoices.joins(:invoice_items, :transactions)
+                          .select("SUM(invoice_items.quantity*invoice_items.unit_price) as total_revenue")
+                          .merge(Transaction.unscoped.successful)
+    if date
+      all_revenue.where("DATE(invoices.created_at) = ?", date)
+                 .group("DATE(invoices.created_at)")[0]
+    else
+      all_revenue[0]
+    end
+  end
+
+  def favorite_customer
+    invoices.joins(:transactions, :customer)
+            .merge(Transaction.unscoped.successful)
+            .select("customers.*, COUNT(invoices.customer_id) as invoice_count")
+            .group("customers.id")
+            .order("invoice_count desc")
+            .limit(1)[0]
   end
 end
