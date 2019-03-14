@@ -22,6 +22,9 @@ Rails.application.routes.draw do
       resources :items, only: [:index, :show] do
         get '/best_day', to: 'best_day#show'
       end
+      resources :customers, only: [:index, :show] do
+        get '/favorite_merchant', to: 'favorite_merchant#show'
+      end
     end
   end
 end
