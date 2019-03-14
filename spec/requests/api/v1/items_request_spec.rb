@@ -90,7 +90,7 @@ describe "Items API" do
       invoice_8 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-27 14:54:05 UTC")
       create(:invoice_item, invoice: invoice_8, item: @item_1)
 
-      get '/api/v1/items/:id/best_day'
+      get "/api/v1/items/#{@item_1.id}/best_day"
 
       date = JSON.parse(response.body)['data']
 

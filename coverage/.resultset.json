@@ -166,6 +166,20 @@
         null,
         null
       ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/best_day_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/date_serializer.rb": [
+        1,
+        1,
+        1,
+        null
+      ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants_controller.rb": [
         1,
         1,
@@ -290,6 +304,6 @@
         0
       ]
     },
-    "timestamp": 1552586098
+    "timestamp": 1552586602
   }
 }
