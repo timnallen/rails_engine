@@ -324,9 +324,9 @@ describe "Merchants API" do
 
         expect(response).to be_successful
         expect(customers.count).to eq(3)
-        expect(customers[0]['attributes']).to eq({'first_name' => "My", 'last_name' => "Customer"})
-        expect(customers[1]['attributes']).to eq({'first_name' => "Failed", 'last_name' => "Transaction"})
-        expect(customers[2]['attributes']).to eq({'first_name' => "No", 'last_name' => "Payment"})
+        expect(customers[0]['id']).to be_in([@customer.id.to_s, customer_3.id.to_s, customer_5.id.to_s])
+        expect(customers[1]['id']).to be_in([@customer.id.to_s, customer_3.id.to_s, customer_5.id.to_s])
+        expect(customers[2]['id']).to be_in([@customer.id.to_s, customer_3.id.to_s, customer_5.id.to_s])
       end
     end
   end
