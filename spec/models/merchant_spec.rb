@@ -108,6 +108,28 @@ RSpec.describe Merchant, type: :model do
         expect(@merchant_4.favorite_customer.last_name).to eq(customer_2.last_name)
         expect(@merchant_4.favorite_customer.id).to eq(customer_2.id)
       end
+
+      it '#customers_with_pending_invoices' do
+        customer_2 = create(:customer)
+        customer_3 = create(:customer, first_name: "Failed", last_name: "Transaction")
+        customer_4 = create(:customer)
+        customer_5 = create(:customer, first_name: "No", last_name: "Payment")
+        invoice_5 = create(:invoice, customer: customer_2, merchant: @merchant_4)
+        invoice_6 = create(:invoice, customer: customer_3, merchant: @merchant_4)
+        invoice_7 = create(:invoice, customer: customer_4, merchant: @merchant_4)
+        create(:invoice, customer: customer_5, merchant: @merchant_4)
+        create(:transaction, invoice: invoice_5, result: 'success')
+        create(:transaction, invoice: invoice_6, result: 'failed')
+        create(:transaction, invoice: invoice_7, result: 'success')
+
+        expect(@merchant_4.customers_with_pending_invoices.count).to eq(3)
+        expect(@merchant_4.customers_with_pending_invoices[0].first_name).to be_in(["My", "No", "Failed"])
+        expect(@merchant_4.customers_with_pending_invoices[0].last_name).to be_in(["Customer", "Transaction", "Payment"])
+        expect(@merchant_4.customers_with_pending_invoices[1].first_name).to be_in(["My", "No", "Failed"])
+        expect(@merchant_4.customers_with_pending_invoices[1].last_name).to be_in(["Customer", "Transaction", "Payment"])
+        expect(@merchant_4.customers_with_pending_invoices[2].first_name).to be_in(["My", "No", "Failed"])
+        expect(@merchant_4.customers_with_pending_invoices[2].last_name).to be_in(["Customer", "Transaction", "Payment"])
+      end
     end
   end
 end

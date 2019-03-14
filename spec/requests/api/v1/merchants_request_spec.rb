@@ -304,6 +304,30 @@ describe "Merchants API" do
         expect(response).to be_successful
         expect(customer['attributes']).to eq({'first_name' => "Me", 'last_name' => "Also me"})
       end
+
+      it 'can get a list of customers with unpaid invoices' do
+        customer_2 = create(:customer)
+        customer_3 = create(:customer, first_name: "Failed", last_name: "Transaction")
+        customer_4 = create(:customer)
+        customer_5 = create(:customer, first_name: "No", last_name: "Payment")
+        invoice_5 = create(:invoice, customer: customer_2, merchant: @merchant_4)
+        invoice_6 = create(:invoice, customer: customer_3, merchant: @merchant_4)
+        invoice_7 = create(:invoice, customer: customer_4, merchant: @merchant_4)
+        create(:invoice, customer: customer_5, merchant: @merchant_4)
+        create(:transaction, invoice: invoice_5, result: 'success')
+        create(:transaction, invoice: invoice_6, result: 'failed')
+        create(:transaction, invoice: invoice_7, result: 'success')
+
+        get "/api/v1/merchants/#{@merchant_4.id}/customers_with_pending_invoices"
+
+        customers = JSON.parse(response.body)['data']
+
+        expect(response).to be_successful
+        expect(customers.count).to eq(3)
+        expect(customers[0]['id']).to be_in([@customer.id.to_s, customer_3.id.to_s, customer_5.id.to_s])
+        expect(customers[1]['id']).to be_in([@customer.id.to_s, customer_3.id.to_s, customer_5.id.to_s])
+        expect(customers[2]['id']).to be_in([@customer.id.to_s, customer_3.id.to_s, customer_5.id.to_s])
+      end
     end
   end
 end
