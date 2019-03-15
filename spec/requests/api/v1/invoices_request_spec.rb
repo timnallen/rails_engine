@@ -38,5 +38,16 @@ describe "Invoices API" do
       expect(invoice_items[0]['id']).to eq(@invoice_item_1.id.to_s)
       expect(invoice_items[1]['id']).to eq(@invoice_item_2.id.to_s)
     end
+
+    it 'can get all the items for an invoice' do
+      get "/api/v1/invoices/#{@invoice.id}/items"
+
+      items = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(items.count).to eq(2)
+      expect(items[0]['id']).to eq(@item_1.id.to_s)
+      expect(items[1]['id']).to eq(@item_2.id.to_s)
+    end
   end
 end
