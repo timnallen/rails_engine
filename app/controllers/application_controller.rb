@@ -4,6 +4,8 @@ class ApplicationController < ActionController::API
       Merchant.find(params[:merchant_id])
     elsif params[:invoice_id]
       Invoice.find(params[:invoice_id])
+    elsif params[:invoice_item_id]
+      InvoiceItem.find(params[:invoice_item_id])
     end
   end
 end
