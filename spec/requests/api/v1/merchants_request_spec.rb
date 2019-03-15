@@ -132,6 +132,26 @@ describe "Merchants API" do
     end
   end
 
+  describe 'relationship endpoints' do
+    it 'returns a collection of items sold from that merchant' do
+      merchant = create(:merchant)
+      merchant_2 = create(:merchant)
+      item_1 = create(:item, merchant: merchant)
+      item_2 = create(:item, merchant: merchant)
+      create(:item, merchant: merchant_2)
+
+      get "/api/v1/merchants/#{merchant.id}/items"
+
+      items = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(items[0]['id']).to eq(item_1.id.to_s)
+      expect(items[1]['id']).to eq(item_2.id.to_s)
+      expect(items[0]['attributes']['name']).to eq(item_1.name)
+      expect(items[1]['attributes']['name']).to eq(item_2.name)
+    end
+  end
+
   describe 'business intelligence' do
     before :each do
       @customer = create(:customer)
