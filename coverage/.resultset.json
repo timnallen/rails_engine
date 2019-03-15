@@ -8,7 +8,7 @@
         1,
         1,
         null,
-        55,
+        59,
         null,
         1,
         null,
@@ -157,7 +157,45 @@
         null,
         24,
         null,
-        175,
+        177,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices_controller.rb": [
+        1,
+        1,
+        2,
+        2,
+        null,
+        null,
+        1,
+        2,
+        2,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/application_controller.rb": [
+        1,
+        1,
+        12,
+        2,
+        10,
+        4,
+        6,
+        2,
+        4,
+        2,
+        2,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/invoice_serializer.rb": [
+        1,
+        1,
+        1,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/favorite_merchant_controller.rb": [
@@ -168,41 +206,7 @@
         null,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/application_controller.rb": [
-        1,
-        1,
-        9,
-        1,
-        8,
-        4,
-        4,
-        2,
-        2,
-        2,
-        null,
-        null,
-        null
-      ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/merchant_serializer.rb": [
-        1,
-        1,
-        1,
-        null
-      ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices_controller.rb": [
-        1,
-        1,
-        1,
-        1,
-        null,
-        null,
-        1,
-        1,
-        1,
-        null,
-        null
-      ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/invoice_serializer.rb": [
         1,
         1,
         1,
@@ -420,6 +424,6 @@
         0
       ]
     },
-    "timestamp": 1552669622
+    "timestamp": 1552671477
   }
 }

@@ -8,6 +8,10 @@ class ApplicationController < ActionController::API
       InvoiceItem.find(params[:invoice_item_id])
     elsif params[:item_id]
       Item.find(params[:item_id])
+    elsif params[:transaction_id]
+      Transaction.find(params[:transaction_id])
+    elsif params[:customer_id]
+      Customer.find(params[:customer_id])
     end
   end
 end

@@ -5,6 +5,26 @@ describe "Customers API" do
   end
 
   describe 'relationship endpoints' do
+    it 'can get a collection of associated invoices' do
+      customer = create(:customer)
+      customer_2 = create(:customer)
+      merchant = create(:merchant)
+      merchant = create(:merchant)
+      invoice_1 = create(:invoice, customer: customer, merchant: merchant)
+      invoice_2 = create(:invoice, customer: customer, merchant: merchant)
+      invoice_3 = create(:invoice, customer: customer, merchant: merchant)
+      create(:invoice, customer: customer_2, merchant: merchant)
+
+      get "/api/v1/customers/#{customer.id}/invoices"
+
+      invoices = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(invoices.count).to eq(3)
+      expect(invoices[0]['id']).to eq(invoice_1.id.to_s)
+      expect(invoices[1]['id']).to eq(invoice_2.id.to_s)
+      expect(invoices[2]['id']).to eq(invoice_3.id.to_s)
+    end
   end
 
   describe 'business intelligence' do

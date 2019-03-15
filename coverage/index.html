@@ -14,26 +14,26 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2019-03-15T11:07:02-06:00">2019-03-15T11:07:02-06:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2019-03-15T11:37:57-06:00">2019-03-15T11:37:57-06:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">92.86%</span></span>
+    (<span class="covered_percent"><span class="green">93.0%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         2.59
+         2.66
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>39</b> files in total.
-    <b>196</b> relevant lines. 
-    <span class="green"><b>182</b> lines covered</span> and
+    <b>200</b> relevant lines. 
+    <span class="green"><b>186</b> lines covered</span> and
     <span class="red"><b>14</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -127,7 +127,7 @@
         <td>7</td>
         <td>7</td>
         <td>0</td>
-        <td>1.0</td>
+        <td>1.6</td>
       </tr>
       
       <tr>
@@ -263,11 +263,11 @@
       <tr>
         <td class="strong"><a href="#70a719af28ae8924ee576c87f2dac995107e312c" class="src_link" title="app/controllers/application_controller.rb">app/controllers/application_controller.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>13</td>
-        <td>10</td>
-        <td>10</td>
+        <td>17</td>
+        <td>14</td>
+        <td>14</td>
         <td>0</td>
-        <td>3.4</td>
+        <td>3.5</td>
       </tr>
       
       <tr>
@@ -307,7 +307,7 @@
         <td>7</td>
         <td>7</td>
         <td>0</td>
-        <td>8.9</td>
+        <td>9.4</td>
       </tr>
       
       <tr>
@@ -357,7 +357,7 @@
         <td>7</td>
         <td>7</td>
         <td>0</td>
-        <td>29.1</td>
+        <td>29.4</td>
       </tr>
       
       <tr>
@@ -453,15 +453,15 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         1.52
+         1.66
        </span>
     </span> hits/line)
   </h2>
   <a name="Controllers"></a>
   <div>
     <b>20</b> files in total.
-    <b>91</b> relevant lines. 
-    <span class="green"><b>91</b> lines covered</span> and
+    <b>95</b> relevant lines. 
+    <span class="green"><b>95</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -535,7 +535,7 @@
         <td>7</td>
         <td>7</td>
         <td>0</td>
-        <td>1.0</td>
+        <td>1.6</td>
       </tr>
       
       <tr>
@@ -671,11 +671,11 @@
       <tr>
         <td class="strong"><a href="#70a719af28ae8924ee576c87f2dac995107e312c" class="src_link" title="app/controllers/application_controller.rb">app/controllers/application_controller.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>13</td>
-        <td>10</td>
-        <td>10</td>
+        <td>17</td>
+        <td>14</td>
+        <td>14</td>
         <td>0</td>
-        <td>3.4</td>
+        <td>3.5</td>
       </tr>
       
     </tbody>
@@ -690,7 +690,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         5.24
+         5.33
        </span>
     </span> hits/line)
   </h2>
@@ -732,7 +732,7 @@
         <td>7</td>
         <td>7</td>
         <td>0</td>
-        <td>8.9</td>
+        <td>9.4</td>
       </tr>
       
       <tr>
@@ -782,7 +782,7 @@
         <td>7</td>
         <td>7</td>
         <td>0</td>
-        <td>29.1</td>
+        <td>29.4</td>
       </tr>
       
     </tbody>
@@ -1492,16 +1492,16 @@
           <code class="ruby">  def index</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="3">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="3">
+          <span class="hits">2</span>
           
-          <code class="ruby">    merchant = Merchant.find(params[:merchant_id])</code>
+          <code class="ruby">    object = related_object_finder(params)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="4">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="4">
+          <span class="hits">2</span>
           
-          <code class="ruby">    render json: InvoiceSerializer.new(merchant.invoices)</code>
+          <code class="ruby">    render json: InvoiceSerializer.new(object.invoices)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="5">
@@ -1522,14 +1522,14 @@
           <code class="ruby">  def show</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="8">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="8">
+          <span class="hits">2</span>
           
           <code class="ruby">    object = related_object_finder(params)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="9">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="9">
+          <span class="hits">2</span>
           
           <code class="ruby">    render json: InvoiceSerializer.new(object.invoice)</code>
         </li>
@@ -2337,8 +2337,8 @@
     <h3>app/controllers/application_controller.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>10</b> relevant lines. 
-      <span class="green"><b>10</b> lines covered</span> and
+      <b>14</b> relevant lines. 
+      <span class="green"><b>14</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -2358,20 +2358,20 @@
           <code class="ruby">  def related_object_finder(params)</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="3">
-          <span class="hits">9</span>
+        <li class="covered" data-hits="12" data-linenumber="3">
+          <span class="hits">12</span>
           
           <code class="ruby">    if params[:merchant_id]</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="4">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="4">
+          <span class="hits">2</span>
           
           <code class="ruby">      Merchant.find(params[:merchant_id])</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="5">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="10" data-linenumber="5">
+          <span class="hits">10</span>
           
           <code class="ruby">    elsif params[:invoice_id]</code>
         </li>
@@ -2382,8 +2382,8 @@
           <code class="ruby">      Invoice.find(params[:invoice_id])</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="7">
-          <span class="hits">4</span>
+        <li class="covered" data-hits="6" data-linenumber="7">
+          <span class="hits">6</span>
           
           <code class="ruby">    elsif params[:invoice_item_id]</code>
         </li>
@@ -2394,8 +2394,8 @@
           <code class="ruby">      InvoiceItem.find(params[:invoice_item_id])</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="9">
-          <span class="hits">2</span>
+        <li class="covered" data-hits="4" data-linenumber="9">
+          <span class="hits">4</span>
           
           <code class="ruby">    elsif params[:item_id]</code>
         </li>
@@ -2406,19 +2406,43 @@
           <code class="ruby">      Item.find(params[:item_id])</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="11">
+        <li class="covered" data-hits="2" data-linenumber="11">
+          <span class="hits">2</span>
+          
+          <code class="ruby">    elsif params[:transaction_id]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="12">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      Transaction.find(params[:transaction_id])</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="13">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    elsif params[:customer_id]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="14">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      Customer.find(params[:customer_id])</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="15">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="12">
+        <li class="never" data-hits="" data-linenumber="16">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="13">
+        <li class="never" data-hits="" data-linenumber="17">
           
           
           <code class="ruby">end</code>
@@ -2590,8 +2614,8 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="55" data-linenumber="7">
-          <span class="hits">55</span>
+        <li class="covered" data-hits="59" data-linenumber="7">
+          <span class="hits">59</span>
           
           <code class="ruby">  default_scope { order(:id) }</code>
         </li>
@@ -3489,8 +3513,8 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="175" data-linenumber="10">
-          <span class="hits">175</span>
+        <li class="covered" data-hits="177" data-linenumber="10">
+          <span class="hits">177</span>
           
           <code class="ruby">  default_scope { order(:id) }</code>
         </li>
