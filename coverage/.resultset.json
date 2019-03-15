@@ -157,7 +157,7 @@
         null,
         24,
         null,
-        156,
+        159,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/favorite_merchant_controller.rb": [
@@ -173,6 +173,20 @@
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/merchant_serializer.rb": [
+        1,
+        1,
+        1,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/transactions_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/transaction_serializer.rb": [
         1,
         1,
         1,
@@ -355,6 +369,6 @@
         0
       ]
     },
-    "timestamp": 1552665604
+    "timestamp": 1552665868
   }
 }
