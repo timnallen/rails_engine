@@ -8,7 +8,7 @@
         1,
         1,
         null,
-        52,
+        53,
         null,
         1,
         null,
@@ -171,12 +171,12 @@
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/application_controller.rb": [
         1,
         1,
+        6,
+        1,
         5,
-        1,
-        4,
         3,
-        1,
-        1,
+        2,
+        2,
         null,
         null,
         null
@@ -206,6 +206,25 @@
         1,
         null
       ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/items_controller.rb": [
+        1,
+        1,
+        2,
+        2,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/item_serializer.rb": [
+        1,
+        1,
+        1,
+        null
+      ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/transactions_controller.rb": [
         1,
         1,
@@ -229,20 +248,6 @@
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/invoice_item_serializer.rb": [
-        1,
-        1,
-        1,
-        null
-      ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/items_controller.rb": [
-        1,
-        1,
-        2,
-        2,
-        null,
-        null
-      ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/item_serializer.rb": [
         1,
         1,
         1,
@@ -413,6 +418,6 @@
         0
       ]
     },
-    "timestamp": 1552668477
+    "timestamp": 1552668601
   }
 }

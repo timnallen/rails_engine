@@ -18,5 +18,14 @@ describe 'Invoice Items API' do
       expect(response).to be_successful
       expect(invoice['id']).to eq(@invoice.id.to_s)
     end
+
+    it 'can get the associated item for an invoice_item' do
+      get "/api/v1/invoice_items/#{@invoice_item.id}/item"
+
+      item = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(item['id']).to eq(@item.id.to_s)
+    end
   end
 end
