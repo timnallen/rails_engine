@@ -8,7 +8,7 @@ Rails.application.routes.draw do
         get '/revenue', to: 'revenue#show'
         get '/find', to: 'search#show'
         get '/find_all', to: 'search#index'
-        get 'random', to: 'random#show'
+        get '/random', to: 'random#show'
       end
       resources :invoices, only: [:show] do
         resources :transactions, only: [:index]
@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       end
       resources :items, only: [:show] do
         get '/best_day', to: 'best_day#show'
+        get '/invoice_items', to: 'invoice_items#index'
       end
       resources :customers, only: [:index, :show] do
         get '/favorite_merchant', to: 'favorite_merchant#show'

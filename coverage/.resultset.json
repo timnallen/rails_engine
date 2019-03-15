@@ -8,7 +8,7 @@
         1,
         1,
         null,
-        53,
+        54,
         null,
         1,
         null,
@@ -157,7 +157,7 @@
         null,
         24,
         null,
-        167,
+        171,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/favorite_merchant_controller.rb": [
@@ -171,12 +171,14 @@
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/application_controller.rb": [
         1,
         1,
-        6,
+        8,
         1,
-        5,
+        7,
+        4,
         3,
         2,
-        2,
+        1,
+        1,
         null,
         null,
         null
@@ -242,8 +244,8 @@
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoice_items_controller.rb": [
         1,
         1,
-        1,
-        1,
+        2,
+        2,
         null,
         null
       ],
@@ -418,6 +420,6 @@
         0
       ]
     },
-    "timestamp": 1552668601
+    "timestamp": 1552669418
   }
 }
