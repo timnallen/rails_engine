@@ -142,7 +142,7 @@ describe "Merchants API" do
     end
 
     it 'returns a collection of items sold from that merchant' do
-      get "/api/v1/merchants/#{merchant.id}/items"
+      get "/api/v1/merchants/#{@merchant.id}/items"
 
       items = JSON.parse(response.body)['data']
 
@@ -159,7 +159,7 @@ describe "Merchants API" do
       invoice_2 = create(:invoice, customer: customer, merchant: @merchant)
       create(:invoice, customer: customer, merchant: @merchant_2)
 
-      get "/api/v1/merchants/#{merchant.id}/invoices"
+      get "/api/v1/merchants/#{@merchant.id}/invoices"
 
       invoices = JSON.parse(response.body)['data']
 

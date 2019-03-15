@@ -8,7 +8,7 @@
         1,
         1,
         null,
-        44,
+        45,
         null,
         1,
         null,
@@ -258,6 +258,20 @@
         null,
         null
       ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/invoice_serializer.rb": [
+        1,
+        1,
+        1,
+        null
+      ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants/most_revenue_controller.rb": [
         1,
         1,
@@ -341,6 +355,6 @@
         0
       ]
     },
-    "timestamp": 1552664622
+    "timestamp": 1552665178
   }
 }
