@@ -57,6 +57,16 @@ describe "Items API" do
       expect(invoice_items[0]['id']).to eq(@invoice_item_1.id.to_s)
       expect(invoice_items[1]['id']).to eq(invoice_item_2.id.to_s)
     end
+
+    it 'can get the associated merchant for an item' do
+      get "/api/v1/items/#{@item_1.id}/merchant"
+
+      merchant = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(merchant['id']).to eq(@merchant_1.id.to_s)
+      expect(merchant['attributes']['name']).to eq("M1")
+    end
   end
 
   describe 'business intelligence' do
