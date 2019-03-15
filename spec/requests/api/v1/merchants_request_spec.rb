@@ -133,22 +133,39 @@ describe "Merchants API" do
   end
 
   describe 'relationship endpoints' do
-    it 'returns a collection of items sold from that merchant' do
-      merchant = create(:merchant)
-      merchant_2 = create(:merchant)
-      item_1 = create(:item, merchant: merchant)
-      item_2 = create(:item, merchant: merchant)
-      create(:item, merchant: merchant_2)
+    before :each do
+      @merchant = create(:merchant)
+      @merchant_2 = create(:merchant)
+      @item_1 = create(:item, merchant: @merchant)
+      @item_2 = create(:item, merchant: @merchant)
+      create(:item, merchant: @merchant_2)
+    end
 
+    it 'returns a collection of items sold from that merchant' do
       get "/api/v1/merchants/#{merchant.id}/items"
 
       items = JSON.parse(response.body)['data']
 
       expect(response).to be_successful
-      expect(items[0]['id']).to eq(item_1.id.to_s)
-      expect(items[1]['id']).to eq(item_2.id.to_s)
-      expect(items[0]['attributes']['name']).to eq(item_1.name)
-      expect(items[1]['attributes']['name']).to eq(item_2.name)
+      expect(items[0]['id']).to eq(@item_1.id.to_s)
+      expect(items[1]['id']).to eq(@item_2.id.to_s)
+      expect(items[0]['attributes']['name']).to eq(@item_1.name)
+      expect(items[1]['attributes']['name']).to eq(@item_2.name)
+    end
+
+    it 'returns a collection of invoices sold from that merchant' do
+      customer = create(:customer)
+      invoice_1 = create(:invoice, customer: customer, merchant: @merchant)
+      invoice_2 = create(:invoice, customer: customer, merchant: @merchant)
+      create(:invoice, customer: customer, merchant: @merchant_2)
+
+      get "/api/v1/merchants/#{merchant.id}/invoices"
+
+      invoices = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(invoices[0]['id']).to eq(invoice_1.id.to_s)
+      expect(invoices[1]['id']).to eq(invoice_2.id.to_s)
     end
   end
 
