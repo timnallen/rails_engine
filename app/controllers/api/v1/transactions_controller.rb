@@ -1,6 +1,6 @@
 class Api::V1::TransactionsController < ApplicationController
   def index
-    invoice = Invoice.find(params[:invoice_id])
-    render json: TransactionSerializer.new(invoice.transactions)
+    object = related_object_finder(params)
+    render json: TransactionSerializer.new(object.transactions)
   end
 end

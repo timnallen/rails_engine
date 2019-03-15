@@ -4,11 +4,12 @@
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/models/customer.rb": [
         1,
         1,
+        1,
         null,
         1,
         1,
         null,
-        59,
+        63,
         null,
         1,
         null,
@@ -157,7 +158,7 @@
         null,
         24,
         null,
-        177,
+        183,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices_controller.rb": [
@@ -176,23 +177,37 @@
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/application_controller.rb": [
         1,
         1,
+        14,
+        2,
         12,
+        5,
+        7,
         2,
-        10,
-        4,
-        6,
+        5,
         2,
-        4,
-        2,
-        2,
+        3,
         1,
-        1,
-        1,
+        2,
+        2,
         null,
         null,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/invoice_serializer.rb": [
+        1,
+        1,
+        1,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/transactions_controller.rb": [
+        1,
+        1,
+        2,
+        2,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/transaction_serializer.rb": [
         1,
         1,
         1,
@@ -226,20 +241,6 @@
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/item_serializer.rb": [
-        1,
-        1,
-        1,
-        null
-      ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/transactions_controller.rb": [
-        1,
-        1,
-        1,
-        1,
-        null,
-        null
-      ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/transaction_serializer.rb": [
         1,
         1,
         1,
@@ -424,6 +425,6 @@
         0
       ]
     },
-    "timestamp": 1552671477
+    "timestamp": 1552672035
   }
 }
