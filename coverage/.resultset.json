@@ -8,7 +8,7 @@
         1,
         1,
         null,
-        48,
+        49,
         null,
         1,
         null,
@@ -157,7 +157,7 @@
         null,
         24,
         null,
-        163,
+        165,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/favorite_merchant_controller.rb": [
@@ -390,6 +390,6 @@
         0
       ]
     },
-    "timestamp": 1552666973
+    "timestamp": 1552667167
   }
 }

@@ -49,5 +49,15 @@ describe "Invoices API" do
       expect(items[0]['id']).to eq(@item_1.id.to_s)
       expect(items[1]['id']).to eq(@item_2.id.to_s)
     end
+
+    it 'can get the customer for an invoice' do
+      get "/api/v1/invoices/#{@invoice.id}/customer"
+
+      customer = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(customer['id']).to eq(@customer.id.to_s)
+      expect(customer['attributes']).to eq({'first_name' => 'my', 'last_name' => 'customer'})
+    end
   end
 end
