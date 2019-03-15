@@ -67,7 +67,7 @@ describe "Invoices API" do
 
       expect(response).to be_successful
       expect(merchant['id']).to eq(@merchant.id.to_s)
-      expect(merchant['attributes']).to eq({'name' => 'MyMerchant'})
+      expect(merchant['attributes']['name']).to eq('MyMerchant')
     end
   end
 end
