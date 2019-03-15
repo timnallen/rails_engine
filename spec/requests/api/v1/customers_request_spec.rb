@@ -5,6 +5,44 @@ describe "Customers API" do
   end
 
   describe 'relationship endpoints' do
+    before :each do
+      @customer = create(:customer)
+      @customer_2 = create(:customer)
+      @merchant = create(:merchant)
+      @merchant = create(:merchant)
+      @invoice_1 = create(:invoice, customer: @customer, merchant: @merchant)
+      @invoice_2 = create(:invoice, customer: @customer, merchant: @merchant)
+      @invoice_3 = create(:invoice, customer: @customer, merchant: @merchant)
+      create(:invoice, customer: @customer_2, merchant: @merchant)
+    end
+
+    it 'can get a collection of associated invoices' do
+      get "/api/v1/customers/#{@customer.id}/invoices"
+
+      invoices = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(invoices.count).to eq(3)
+      expect(invoices[0]['id']).to eq(@invoice_1.id.to_s)
+      expect(invoices[1]['id']).to eq(@invoice_2.id.to_s)
+      expect(invoices[2]['id']).to eq(@invoice_3.id.to_s)
+    end
+
+    it 'can get a collection of associated transactions' do
+      transaction_1 = create(:transaction, invoice: @invoice_1)
+      transaction_2 = create(:transaction, invoice: @invoice_2)
+      transaction_3 = create(:transaction, invoice: @invoice_3)
+
+      get "/api/v1/customers/#{@customer.id}/transactions"
+
+      transactions = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+      expect(transactions.count).to eq(3)
+      expect(transactions[0]['id']).to eq(transaction_1.id.to_s)
+      expect(transactions[1]['id']).to eq(transaction_2.id.to_s)
+      expect(transactions[2]['id']).to eq(transaction_3.id.to_s)
+    end
   end
 
   describe 'business intelligence' do
