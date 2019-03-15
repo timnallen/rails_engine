@@ -57,7 +57,7 @@ describe "Invoices API" do
 
       expect(response).to be_successful
       expect(customer['id']).to eq(@customer.id.to_s)
-      expect(customer['attributes']).to eq({'first_name' => 'my', 'last_name' => 'customer'})
+      expect(customer['attributes']).to eq({'first_name' => 'My', 'last_name' => 'Customer'})
     end
   end
 end
