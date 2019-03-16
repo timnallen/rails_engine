@@ -34,17 +34,6 @@ describe "Invoices API" do
       expect(invoice['data']["id"]).to eq(id)
     end
 
-    it "can get one invoice by searching its name" do
-      name = create(:invoice).name
-
-      get "/api/v1/invoices/find?name=#{name}"
-
-      invoice = JSON.parse(response.body)
-
-      expect(response).to be_successful
-      expect(invoice['data']['attributes']["name"]).to eq(name)
-    end
-
     it "can get one invoice by searching its status" do
       status = create(:invoice).status
 
@@ -64,7 +53,6 @@ describe "Invoices API" do
       customer_json = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(customer_json['data']['attributes']['name']).to eq(invoice.name)
       expect(customer_json['data']['id']).to eq(invoice.id.to_s)
     end
 
@@ -76,11 +64,10 @@ describe "Invoices API" do
       customer_json = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(customer_json['data']['attributes']['name']).to eq(invoice.name)
       expect(customer_json['data']['id']).to eq(invoice.id.to_s)
     end
 
-    it 'can get all invoices by searching by id, name, or status' do
+    it 'can get all invoices by searching by id, or status' do
       id = create(:invoice).id.to_s
 
       get "/api/v1/invoices/find_all?id=#{id}"
@@ -89,17 +76,6 @@ describe "Invoices API" do
 
       expect(response).to be_successful
       expect(invoices['data'][0]["id"]).to eq(id)
-
-      name = create(:invoice).name
-
-      get "/api/v1/invoices/find_all?name=#{name}"
-
-      invoices = JSON.parse(response.body)
-
-      expect(response).to be_successful
-      expect(invoices['data'][0]['attributes']["name"]).to eq(name)
-      expect(invoices['data'][1]['attributes']["name"]).to eq(name)
-      expect(invoices['data'].count).to eq(2)
 
       status = create(:invoice).status
 
@@ -110,8 +86,7 @@ describe "Invoices API" do
       expect(response).to be_successful
       expect(invoices['data'][0]['attributes']["status"]).to eq(status)
       expect(invoices['data'][1]['attributes']["status"]).to eq(status)
-      expect(invoices['data'][2]['attributes']["status"]).to eq(status)
-      expect(invoices['data'].count).to eq(3)
+      expect(invoices['data'].count).to eq(2)
     end
 
     it 'can get all invoices by searching by created_at or updated_at' do
@@ -210,7 +185,7 @@ describe "Invoices API" do
 
       expect(response).to be_successful
       expect(customer['id']).to eq(@customer.id.to_s)
-      expect(customer['attributes']).to eq({'first_name' => 'My', 'last_name' => 'Customer'})
+      expect(customer['attributes']).to eq({'id' => @customer.id,'first_name' => 'My', 'last_name' => 'Customer'})
     end
 
     it 'can get the merchant for an invoice' do

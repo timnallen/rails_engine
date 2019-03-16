@@ -46,14 +46,14 @@ describe 'Transactions API' do
     end
 
     it "can get one transaction by searching its credit_card_expiration_date" do
-      credit_card_expiration_date = create(:transaction).credit_card_expiration_date
+      transaction = create(:transaction, credit_card_number: "4560987567409856")
 
-      get "/api/v1/transactions/find?credit_card_expiration_date=#{credit_card_expiration_date}"
+      get "/api/v1/transactions/find?credit_card_expiration_date=#{transaction.credit_card_expiration_date}"
 
-      transaction = JSON.parse(response.body)
+      transaction_json = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(transaction['data']['attributes']["credit_card_expiration_date"]).to eq(credit_card_expiration_date)
+      expect(transaction_json['data']['attributes']["credit_card_number"]).to eq(transaction.credit_card_number)
     end
 
     it "can get one transaction by searching its result" do
@@ -112,16 +112,16 @@ describe 'Transactions API' do
       expect(transactions['data'][1]['attributes']["credit_card_number"]).to eq(credit_card_number)
       expect(transactions['data'].count).to eq(2)
 
-      credit_card_expiration_date = create(:transaction).credit_card_expiration_date
+      transaction_2 = create(:transaction)
 
-      get "/api/v1/transactions/find_all?credit_card_expiration_date=#{credit_card_expiration_date}"
+      get "/api/v1/transactions/find_all?credit_card_expiration_date=#{transaction_2.credit_card_expiration_date}"
 
       transactions = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(transactions['data'][0]['attributes']["credit_card_expiration_date"]).to eq(credit_card_expiration_date)
-      expect(transactions['data'][1]['attributes']["credit_card_expiration_date"]).to eq(credit_card_expiration_date)
-      expect(transactions['data'][2]['attributes']["credit_card_expiration_date"]).to eq(credit_card_expiration_date)
+      expect(transactions['data'][0]['attributes']["credit_card_number"]).to eq(credit_card_number)
+      expect(transactions['data'][1]['attributes']["credit_card_number"]).to eq(credit_card_number)
+      expect(transactions['data'][2]['attributes']["credit_card_number"]).to eq(credit_card_number)
       expect(transactions['data'].count).to eq(3)
     end
 

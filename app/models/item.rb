@@ -8,8 +8,11 @@ class Item < ApplicationRecord
   validates_presence_of :merchant
   validates_presence_of :unit_price
 
+  default_scope { order(:id) }
+
   def self.by_revenue(limit)
-    Item.joins(:invoice_items, invoices: :transactions)
+    Item.unscoped
+        .joins(:invoice_items, invoices: :transactions)
         .select("items.*, SUM(invoice_items.quantity*invoice_items.unit_price) as total_revenue")
         .group(:id)
         .merge(Transaction.unscoped.successful)
@@ -18,7 +21,8 @@ class Item < ApplicationRecord
   end
 
   def self.by_items_sold(limit)
-    Item.joins(:invoice_items, invoices: :transactions)
+    Item.unscoped
+        .joins(:invoice_items, invoices: :transactions)
         .select("items.*, SUM(invoice_items.quantity) as total_items")
         .group(:id)
         .merge(Transaction.unscoped.successful)
@@ -27,11 +31,11 @@ class Item < ApplicationRecord
   end
 
   def best_day
-    invoice_items.select('invoices.created_at, SUM(invoice_items.quantity) as invoice_day_count')
+    invoice_items.select('DATE(invoices.created_at) as date, SUM(invoice_items.quantity) as invoice_day_count')
                  .joins(invoice: :transactions)
                  .merge(Transaction.unscoped.successful)
                  .group("invoices.created_at")
-                 .order("invoice_day_count DESC, invoices.created_at DESC")
+                 .order("invoice_day_count DESC, date DESC")
                  .first
   end
 end

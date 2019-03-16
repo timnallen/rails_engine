@@ -46,14 +46,14 @@ describe 'Invoice Items API' do
     end
 
     it "can get one invoice_item by searching its unit price" do
-      unit_price = create(:invoice_item).unit_price
+      create(:invoice_item, unit_price: 1212)
 
-      get "/api/v1/invoice_items/find?unit_price=#{unit_price}"
+      get "/api/v1/invoice_items/find?unit_price=12.12"
 
       invoice_item = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(invoice_item['data']['attributes']["unit_price"]).to eq(unit_price)
+      expect(invoice_item['data']['attributes']["unit_price"]).to eq("12.12")
     end
 
     it "can get one invoice_item by searching its created_at date" do
@@ -81,7 +81,7 @@ describe 'Invoice Items API' do
     end
 
     it 'can get all invoice_items by searching by id, quantity, or unit_price' do
-      id = create(:invoice_item).id.to_s
+      id = create(:invoice_item, unit_price: 1412).id.to_s
 
       get "/api/v1/invoice_items/find_all?id=#{id}"
 
@@ -101,17 +101,16 @@ describe 'Invoice Items API' do
       expect(invoice_items['data'][1]['attributes']["quantity"]).to eq(quantity)
       expect(invoice_items['data'].count).to eq(2)
 
-      unit_price = create(:invoice_item).unit_price
+      create(:invoice_item, unit_price: 1412)
 
-      get "/api/v1/invoice_items/find_all?unit_price=#{unit_price}"
+      get "/api/v1/invoice_items/find_all?unit_price=14.12"
 
       invoice_items = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(invoice_items['data'][0]['attributes']["unit_price"]).to eq(unit_price)
-      expect(invoice_items['data'][1]['attributes']["unit_price"]).to eq(unit_price)
-      expect(invoice_items['data'][2]['attributes']["unit_price"]).to eq(unit_price)
-      expect(invoice_items['data'].count).to eq(3)
+      expect(invoice_items['data'][0]['attributes']["unit_price"]).to eq("14.12")
+      expect(invoice_items['data'][1]['attributes']["unit_price"]).to eq("14.12")
+      expect(invoice_items['data'].count).to eq(2)
     end
 
     it 'can get all invoice_items by searching by created_at or updated_at' do
