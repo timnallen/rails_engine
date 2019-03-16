@@ -2,141 +2,153 @@ require 'rails_helper'
 
 describe 'Invoice Items API' do
   describe 'record endpoints' do
-    it "can get a list of customers" do
-      create_list(:customer, 3)
+    it "can get a list of invoice_items" do
+      create_list(:invoice_item, 3)
 
-      get '/api/v1/customers'
-
-      expect(response).to be_successful
-      customers = JSON.parse(response.body)
-      expect(customers['data'].count).to eq(3)
-    end
-
-    it "can get one customer by its id" do
-      id = create(:customer).id.to_s
-
-      get "/api/v1/customers/#{id}"
-
-      customer = JSON.parse(response.body)
+      get '/api/v1/invoice_items'
 
       expect(response).to be_successful
-      expect(customer['data']["id"]).to eq(id)
+      invoice_items = JSON.parse(response.body)
+      expect(invoice_items['data'].count).to eq(3)
     end
 
-    it "can get one customer by searching its id" do
-      id = create(:customer).id.to_s
+    it "can get one invoice_item by its id" do
+      id = create(:invoice_item).id.to_s
 
-      get "/api/v1/customers/find?id=#{id}"
+      get "/api/v1/invoice_items/#{id}"
 
-      customer = JSON.parse(response.body)
+      invoice_item = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(customer['data']["id"]).to eq(id)
+      expect(invoice_item['data']["id"]).to eq(id)
     end
 
-    it "can get one customer by searching its first name" do
-      first_name = create(:customer).first_name
+    it "can get one invoice_item by searching its id" do
+      id = create(:invoice_item).id.to_s
 
-      get "/api/v1/customers/find?first_name=#{first_name}"
+      get "/api/v1/invoice_items/find?id=#{id}"
 
-      customer = JSON.parse(response.body)
+      invoice_item = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(customer['data']['attributes']["first_name"]).to eq(first_name)
+      expect(invoice_item['data']["id"]).to eq(id)
     end
 
-    it "can get one customer by searching its last name" do
-      last_name = create(:customer).last_name
+    it "can get one invoice_item by searching its quantity" do
+      quantity = create(:invoice_item).quantity
 
-      get "/api/v1/customers/find?last_name=#{last_name}"
+      get "/api/v1/invoice_items/find?quantity=#{quantity}"
 
-      customer = JSON.parse(response.body)
+      invoice_item = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(customer['data']['attributes']["last_name"]).to eq(last_name)
+      expect(invoice_item['data']['attributes']["quantity"]).to eq(quantity)
     end
 
-    it "can get one customer by searching its created_at date" do
-      customer = create(:customer, created_at: "2012-03-27 14:54:05 UTC")
+    it "can get one invoice_item by searching its unit price" do
+      unit_price = create(:invoice_item).unit_price
 
-      get "/api/v1/customers/find?created_at=#{customer.created_at}"
+      get "/api/v1/invoice_items/find?unit_price=#{unit_price}"
+
+      invoice_item = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(invoice_item['data']['attributes']["unit_price"]).to eq(unit_price)
+    end
+
+    it "can get one invoice_item by searching its created_at date" do
+      invoice_item = create(:invoice_item, created_at: "2012-03-27 14:54:05 UTC")
+
+      get "/api/v1/invoice_items/find?created_at=#{invoice_item.created_at}"
 
       customer_json = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(customer_json['data']['attributes']['first_name']).to eq(customer.first_name)
-      expect(customer_json['data']['id']).to eq(customer.id.to_s)
+      expect(customer_json['data']['attributes']['quantity']).to eq(invoice_item.quantity)
+      expect(customer_json['data']['id']).to eq(invoice_item.id.to_s)
     end
 
-    it "can get one customer by searching its updated_at date" do
-      customer = create(:customer, updated_at: "2012-03-27 14:54:05 UTC")
+    it "can get one invoice_item by searching its updated_at date" do
+      invoice_item = create(:invoice_item, updated_at: "2012-03-27 14:54:05 UTC")
 
-      get "/api/v1/customers/find?updated_at=#{customer.updated_at}"
+      get "/api/v1/invoice_items/find?updated_at=#{invoice_item.updated_at}"
 
       customer_json = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(customer_json['data']['attributes']['first_name']).to eq(customer.first_name)
-      expect(customer_json['data']['id']).to eq(customer.id.to_s)
+      expect(customer_json['data']['attributes']['quantity']).to eq(invoice_item.quantity)
+      expect(customer_json['data']['id']).to eq(invoice_item.id.to_s)
     end
 
-    it 'can get all customers by searching by id or name' do
-      id = create(:customer).id.to_s
+    it 'can get all invoice_items by searching by id, quantity, or unit_price' do
+      id = create(:invoice_item).id.to_s
 
-      get "/api/v1/customers/find_all?id=#{id}"
+      get "/api/v1/invoice_items/find_all?id=#{id}"
 
-      customers = JSON.parse(response.body)
-
-      expect(response).to be_successful
-      expect(customers['data'][0]["id"]).to eq(id)
-
-      first_name = create(:customer).first_name
-
-      get "/api/v1/customers/find_all?first_name=#{first_name}"
-
-      customers = JSON.parse(response.body)
+      invoice_items = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(customers['data'][0]['attributes']["first_name"]).to eq(first_name)
-      expect(customers['data'][1]['attributes']["first_name"]).to eq(first_name)
-      expect(customers['data'].count).to eq(2)
+      expect(invoice_items['data'][0]["id"]).to eq(id)
+
+      quantity = create(:invoice_item).quantity
+
+      get "/api/v1/invoice_items/find_all?quantity=#{quantity}"
+
+      invoice_items = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(invoice_items['data'][0]['attributes']["quantity"]).to eq(quantity)
+      expect(invoice_items['data'][1]['attributes']["quantity"]).to eq(quantity)
+      expect(invoice_items['data'].count).to eq(2)
+
+      unit_price = create(:invoice_item).unit_price
+
+      get "/api/v1/invoice_items/find_all?unit_price=#{unit_price}"
+
+      invoice_items = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(invoice_items['data'][0]['attributes']["unit_price"]).to eq(unit_price)
+      expect(invoice_items['data'][1]['attributes']["unit_price"]).to eq(unit_price)
+      expect(invoice_items['data'][2]['attributes']["unit_price"]).to eq(unit_price)
+      expect(invoice_items['data'].count).to eq(3)
     end
 
-    it 'can get all customers by searching by created_at or updated_at' do
-      customer = create(:customer, created_at: "2012-03-27 14:54:05 UTC", updated_at: "2012-03-27 14:54:05 UTC".to_datetime)
+    it 'can get all invoice_items by searching by created_at or updated_at' do
+      invoice_item = create(:invoice_item, created_at: "2012-03-27 14:54:05 UTC", updated_at: "2012-03-27 14:54:05 UTC".to_datetime)
 
-      get "/api/v1/customers/find_all?created_at=#{customer.created_at}"
+      get "/api/v1/invoice_items/find_all?created_at=#{invoice_item.created_at}"
 
-      customers = JSON.parse(response.body)
-
-      expect(response).to be_successful
-      expect(customers['data'][0]['attributes']["first_name"]).to eq(customer.first_name)
-
-      customer_2 = create(:customer, updated_at: "2012-03-27 14:54:05 UTC")
-
-      get "/api/v1/customers/find_all?updated_at=#{customer_2.updated_at}"
-
-      customers = JSON.parse(response.body)
+      invoice_items = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(customers['data'][0]['attributes']["first_name"]).to eq(customer.first_name)
-      expect(customers['data'][1]['attributes']["first_name"]).to eq(customer_2.first_name)
-      expect(customers['data'].count).to eq(2)
+      expect(invoice_items['data'][0]["id"]).to eq(invoice_item.id.to_s)
+
+      invoice_item_2 = create(:invoice_item, updated_at: "2012-03-27 14:54:05 UTC")
+
+      get "/api/v1/invoice_items/find_all?updated_at=#{invoice_item_2.updated_at}"
+
+      invoice_items = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(invoice_items['data'][0]["id"]).to eq(invoice_item.id.to_s)
+      expect(invoice_items['data'][1]["id"]).to eq(invoice_item_2.id.to_s)
+      expect(invoice_items['data'].count).to eq(2)
     end
 
-    it 'can get a random customer' do
-      id = create(:customer).id.to_s
+    it 'can get a random invoice_item' do
+      id = create(:invoice_item).id.to_s
 
-      get "/api/v1/customers/random"
+      get "/api/v1/invoice_items/random"
 
-      customer = JSON.parse(response.body)
+      invoice_item = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(customer['data']["id"]).to eq(id)
+      expect(invoice_item['data']["id"]).to eq(id)
 
-      id_2 = create(:customer).id.to_s
+      id_2 = create(:invoice_item).id.to_s
 
-      get "/api/v1/customers/random"
+      get "/api/v1/invoice_items/random"
 
       customer_2 = JSON.parse(response.body)
 

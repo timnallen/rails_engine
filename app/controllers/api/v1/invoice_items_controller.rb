@@ -1,6 +1,9 @@
 class Api::V1::InvoiceItemsController < ApplicationController
   def index
-    object = related_object_finder(params)
-    render json: InvoiceItemSerializer.new(object.invoice_items)
+    render json: InvoiceItemSerializer.new(InvoiceItem.all)
+  end
+
+  def show
+    render json: InvoiceItemSerializer.new(InvoiceItem.find(params[:id]))
   end
 end
