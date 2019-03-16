@@ -33,6 +33,52 @@ describe "Customers API" do
       expect(response).to be_successful
       expect(customer['data']["id"]).to eq(id)
     end
+
+    it "can get one customer by searching its first name" do
+      first_name = create(:customer).first_name
+
+      get "/api/v1/customers/find?first_name=#{first_name}"
+
+      customer = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(customer['data']['attributes']["first_name"]).to eq(first_name)
+    end
+
+    it "can get one customer by searching its last name" do
+      last_name = create(:customer).last_name
+
+      get "/api/v1/customers/find?last_name=#{last_name}"
+
+      customer = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(customer['data']['attributes']["last_name"]).to eq(last_name)
+    end
+
+    it "can get one customer by searching its created_at date" do
+      customer = create(:customer, created_at: "2012-03-27 14:54:05 UTC")
+
+      get "/api/v1/customers/find?created_at=#{customer.created_at}"
+
+      customer_json = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(customer_json['data']['attributes']['first_name']).to eq(customer.first_name)
+      expect(customer_json['data']['id']).to eq(customer.id.to_s)
+    end
+
+    it "can get one customer by searching its updated_at date" do
+      customer = create(:customer, updated_at: "2012-03-27 14:54:05 UTC")
+
+      get "/api/v1/customers/find?updated_at=#{customer.updated_at}"
+
+      customer_json = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(customer_json['data']['attributes']['first_name']).to eq(customer.first_name)
+      expect(customer_json['data']['id']).to eq(customer.id.to_s)
+    end
   end
 
   describe 'relationship endpoints' do
