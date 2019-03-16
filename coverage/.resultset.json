@@ -9,7 +9,7 @@
         1,
         1,
         null,
-        69,
+        71,
         null,
         1,
         null,
@@ -195,6 +195,23 @@
         1,
         1,
         1,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/customers/search_controller.rb": [
+        1,
+        1,
+        0,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        null,
+        1,
+        1,
+        null,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices_controller.rb": [
@@ -436,6 +453,6 @@
         0
       ]
     },
-    "timestamp": 1552749030
+    "timestamp": 1552750151
   }
 }

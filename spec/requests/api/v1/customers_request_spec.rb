@@ -22,6 +22,17 @@ describe "Customers API" do
       expect(response).to be_successful
       expect(customer['data']["id"]).to eq(id)
     end
+
+    it "can get one customer by searching its id" do
+      id = create(:customer).id.to_s
+
+      get "/api/v1/customers/find?id=#{id}"
+
+      customer = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(customer['data']["id"]).to eq(id)
+    end
   end
 
   describe 'relationship endpoints' do
