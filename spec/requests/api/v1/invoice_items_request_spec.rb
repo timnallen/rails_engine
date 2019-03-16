@@ -150,10 +150,10 @@ describe 'Invoice Items API' do
 
       get "/api/v1/invoice_items/random"
 
-      customer_2 = JSON.parse(response.body)
+      invoice_item_2 = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(customer_2['data']["id"]).to be_in([id, id_2])
+      expect(invoice_item_2['data']["id"]).to be_in([id, id_2])
     end
   end
 
