@@ -9,7 +9,7 @@
         1,
         1,
         null,
-        79,
+        91,
         null,
         1,
         null,
@@ -200,7 +200,7 @@
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/customers/search_controller.rb": [
         1,
         1,
-        0,
+        4,
         null,
         null,
         1,
@@ -210,7 +210,14 @@
         1,
         null,
         1,
-        5,
+        9,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/customers/random_controller.rb": [
+        1,
+        1,
+        2,
         null,
         null
       ],
@@ -453,6 +460,6 @@
         0
       ]
     },
-    "timestamp": 1552750749
+    "timestamp": 1552751233
   }
 }
