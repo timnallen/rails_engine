@@ -42,6 +42,161 @@ describe "Items API" do
   end
 
   describe 'record endpoints' do
+    it "can get a list of items" do
+      get '/api/v1/items'
+
+      expect(response).to be_successful
+      items = JSON.parse(response.body)
+      expect(items['data'].count).to eq(12)
+    end
+
+    it "can get one item by its id" do
+      id = @item_1.id.to_s
+
+      get "/api/v1/items/#{id}"
+
+      item = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(item['data']["id"]).to eq(id)
+    end
+
+    it "can get one item by searching its id" do
+      id = @item_1.id.to_s
+
+      get "/api/v1/items/find?id=#{id}"
+
+      item = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(item['data']["id"]).to eq(id)
+    end
+
+    it "can get one item by searching its name" do
+      name = create(:item).name
+
+      get "/api/v1/items/find?name=#{name}"
+
+      item = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(item['data']['attributes']["name"]).to eq(name)
+    end
+
+    it "can get one item by searching its description" do
+      description = create(:item, description: "This specific one").description
+
+      get "/api/v1/items/find?description=#{description}"
+
+      item = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(item['data']['attributes']["description"]).to eq(description)
+    end
+
+    it "can get one item by searching its unit_price" do
+      unit_price = create(:item, unit_price: 1111).unit_price
+
+      get "/api/v1/items/find?unit_price=#{unit_price}"
+
+      item = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(item['data']['attributes']["unit_price"]).to eq(unit_price)
+    end
+
+    it "can get one item by searching its created_at date" do
+      item = create(:item, created_at: "2012-03-27 14:54:10 UTC")
+
+      get "/api/v1/items/find?created_at=#{item.created_at}"
+
+      item_json = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(item_json['data']['attributes']['name']).to eq(item.name)
+      expect(item_json['data']['id']).to eq(item.id.to_s)
+    end
+
+    it "can get one item by searching its updated_at date" do
+      item = create(:item, updated_at: "2012-03-27 14:54:10 UTC")
+
+      get "/api/v1/items/find?updated_at=#{item.updated_at}"
+
+      item_json = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(item_json['data']['attributes']['name']).to eq(item.name)
+      expect(item_json['data']['id']).to eq(item.id.to_s)
+    end
+
+    it 'can get all items by searching by id, name, unit_price or description' do
+      id = create(:item, name: "Practice name", unit_price: 4000, description: "describe this").id.to_s
+
+      get "/api/v1/items/find_all?id=#{id}"
+
+      items = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(items['data'][0]["id"]).to eq(id)
+
+      name = create(:item, name: "Practice name", unit_price: 4000, description: "describe this").name
+
+      get "/api/v1/items/find_all?name=#{name}"
+
+      items = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(items['data'][0]['attributes']["name"]).to eq(name)
+      expect(items['data'][1]['attributes']["name"]).to eq(name)
+      expect(items['data'].count).to eq(2)
+
+      description = create(:item, name: "Practice name", unit_price: 4000, description: "describe this").description
+
+      get "/api/v1/items/find_all?description=#{description}"
+
+      items = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(items['data'][0]['attributes']["description"]).to eq(description)
+      expect(items['data'][1]['attributes']["description"]).to eq(description)
+      expect(items['data'][2]['attributes']["description"]).to eq(description)
+      expect(items['data'].count).to eq(3)
+    end
+
+    it 'can get all items by searching by created_at or updated_at' do
+      item = create(:item, created_at: "2012-04-27 14:54:10 UTC", updated_at: "2012-04-27 14:54:10 UTC".to_datetime)
+
+      get "/api/v1/items/find_all?created_at=#{item.created_at}"
+
+      items = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(items['data'][0]["id"]).to eq(item.id.to_s)
+
+      item_2 = create(:item, updated_at: "2012-04-27 14:54:10 UTC")
+
+      get "/api/v1/items/find_all?updated_at=#{item_2.updated_at}"
+
+      items = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(items['data'][0]["id"]).to eq(item.id.to_s)
+      expect(items['data'][1]["id"]).to eq(item_2.id.to_s)
+      expect(items['data'].count).to eq(2)
+    end
+
+    it 'can get a random item' do
+      get "/api/v1/items/random"
+
+      item = JSON.parse(response.body)
+
+      id_strings = Item.all.map do |item|
+        item.id.to_s
+      end
+
+      expect(response).to be_successful
+      expect(item['data']["id"]).to be_in(id_strings)
+    end
   end
 
   describe 'relationship endpoints' do
