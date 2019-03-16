@@ -9,7 +9,7 @@
         1,
         1,
         null,
-        63,
+        153,
         null,
         1,
         null,
@@ -158,38 +158,59 @@
         null,
         24,
         null,
-        183,
+        259,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices_controller.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/customers_controller.rb": [
         1,
         1,
-        2,
-        2,
+        1,
         null,
         null,
         1,
-        2,
-        2,
+        1,
         null,
         null
       ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/application_controller.rb": [
         1,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/customer_serializer.rb": [
         1,
-        14,
-        2,
-        12,
-        5,
-        7,
-        2,
-        5,
-        2,
-        3,
         1,
-        2,
+        1,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/customers/search_controller.rb": [
+        1,
+        1,
+        5,
+        null,
+        null,
+        1,
+        5,
+        null,
+        null,
+        1,
+        null,
+        1,
+        10,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/customers/random_controller.rb": [
+        1,
+        1,
         2,
         null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/customers/invoices_controller.rb": [
+        1,
+        1,
+        1,
+        1,
         null,
         null
       ],
@@ -199,11 +220,11 @@
         1,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/transactions_controller.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/customers/transactions_controller.rb": [
         1,
         1,
-        2,
-        2,
+        1,
+        1,
         null,
         null
       ],
@@ -213,7 +234,7 @@
         1,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/favorite_merchant_controller.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/customers/favorite_merchant_controller.rb": [
         1,
         1,
         1,
@@ -227,13 +248,57 @@
         1,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/items_controller.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoice_items_controller.rb": [
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/invoice_item_serializer.rb": [
+        1,
+        1,
+        1,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoice_items/search_controller.rb": [
+        1,
+        1,
+        5,
+        null,
+        null,
+        1,
+        5,
+        null,
+        null,
+        1,
+        null,
+        1,
+        10,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoice_items/random_controller.rb": [
         1,
         1,
         2,
-        2,
         null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoice_items/invoices_controller.rb": [
+        1,
+        1,
+        1,
+        1,
         null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoice_items/items_controller.rb": [
+        1,
         1,
         1,
         1,
@@ -246,39 +311,129 @@
         1,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoice_items_controller.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices_controller.rb": [
         1,
         1,
-        2,
-        2,
+        1,
         null,
-        null
-      ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/invoice_item_serializer.rb": [
-        1,
-        1,
-        1,
-        null
-      ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/customer_controller.rb": [
-        1,
-        1,
+        null,
         1,
         1,
         null,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/serializers/customer_serializer.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices/search_controller.rb": [
         1,
         1,
+        5,
+        null,
+        null,
         1,
+        5,
+        null,
+        null,
+        1,
+        null,
+        1,
+        10,
+        null,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchant_controller.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices/random_controller.rb": [
         1,
         1,
         2,
-        2,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices/transactions_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices/invoice_items_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices/items_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices/customers_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/invoices/merchants_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/items_controller.rb": [
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/items/search_controller.rb": [
+        1,
+        1,
+        5,
+        null,
+        null,
+        1,
+        6,
+        null,
+        null,
+        1,
+        null,
+        1,
+        11,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/items/random_controller.rb": [
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/items/invoice_items_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/items/merchants_controller.rb": [
+        1,
+        1,
+        1,
+        1,
         null,
         null
       ],
@@ -296,7 +451,7 @@
         null,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/best_day_controller.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/items/best_day_controller.rb": [
         1,
         1,
         1,
@@ -348,6 +503,22 @@
         null,
         null
       ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants/items_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants/invoices_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
       "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants/most_revenue_controller.rb": [
         1,
         1,
@@ -362,7 +533,7 @@
         null,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants/revenue_controller.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants/revenue_by_date_controller.rb": [
         1,
         1,
         1,
@@ -378,7 +549,7 @@
         null,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/revenue_controller.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants/revenue_controller.rb": [
         1,
         1,
         2,
@@ -386,7 +557,7 @@
         null,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/favorite_customer_controller.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants/favorite_customer_controller.rb": [
         1,
         1,
         1,
@@ -394,7 +565,50 @@
         null,
         null
       ],
-      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/pending_invoices_controller.rb": [
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/merchants/pending_invoices_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/transactions_controller.rb": [
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/transactions/search_controller.rb": [
+        1,
+        1,
+        5,
+        null,
+        null,
+        1,
+        6,
+        null,
+        null,
+        1,
+        null,
+        1,
+        11,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/transactions/random_controller.rb": [
+        1,
+        1,
+        2,
+        null,
+        null
+      ],
+      "/Users/timothyallen/turing/3module/projects/rails_engine/app/controllers/api/v1/transactions/invoices_controller.rb": [
         1,
         1,
         1,
@@ -425,6 +639,6 @@
         0
       ]
     },
-    "timestamp": 1552672943
+    "timestamp": 1552764255
   }
 }

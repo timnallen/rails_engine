@@ -1,11 +1,9 @@
 class Api::V1::ItemsController < ApplicationController
   def index
-    object = related_object_finder(params)
-    render json: ItemSerializer.new(object.items)
+    render json: ItemSerializer.new(Item.all)
   end
 
   def show
-    object = related_object_finder(params)
-    render json: ItemSerializer.new(object.item)
+    render json: ItemSerializer.new(Item.find(params[:id]))
   end
 end
