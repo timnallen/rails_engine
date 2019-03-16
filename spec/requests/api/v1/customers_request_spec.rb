@@ -100,6 +100,18 @@ describe "Customers API" do
       expect(customers['data'][0]['attributes']["first_name"]).to eq(first_name)
       expect(customers['data'][1]['attributes']["first_name"]).to eq(first_name)
       expect(customers['data'].count).to eq(2)
+
+      last_name = create(:customer).last_name
+
+      get "/api/v1/customers/find_all?last_name=#{last_name}"
+
+      customers = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(customers['data'][0]['attributes']["last_name"]).to eq(last_name)
+      expect(customers['data'][1]['attributes']["last_name"]).to eq(last_name)
+      expect(customers['data'][2]['attributes']["last_name"]).to eq(last_name)
+      expect(customers['data'].count).to eq(3)
     end
 
     it 'can get all customers by searching by created_at or updated_at' do
