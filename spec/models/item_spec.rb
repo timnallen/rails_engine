@@ -84,7 +84,7 @@ RSpec.describe Item, type: :model do
         invoice_8 = create(:invoice, merchant: @merchant_1, customer: @customer, created_at: "2012-03-27 14:54:05 UTC")
         create(:invoice_item, invoice: invoice_8, item: @item_1)
 
-        expect(@item_1.best_day.created_at).to eq("2012-03-27T14:54:05.000Z")
+        expect(@item_1.best_day.date.to_s).to eq("2012-03-27")
       end
     end
   end

@@ -46,25 +46,25 @@ describe "Merchants API" do
     end
 
     it "can get one merchant by searching its created_at date" do
-      created_at = create(:merchant, created_at: "2012-03-27 14:54:05 UTC").created_at
+      merchant_ex = create(:merchant, created_at: "2012-03-27 14:54:05 UTC")
 
-      get "/api/v1/merchants/find?created_at=#{created_at}"
+      get "/api/v1/merchants/find?created_at=#{merchant_ex.created_at}"
 
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchant['data']['attributes']["created_at"]).to eq("2012-03-27T14:54:05.000Z")
+      expect(merchant['data']['attributes']["id"]).to eq(merchant_ex.id)
     end
 
     it "can get one merchant by searching its updated_at date" do
-      updated_at = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC").updated_at
+      merchant_ex = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC")
 
-      get "/api/v1/merchants/find?updated_at=#{updated_at}"
+      get "/api/v1/merchants/find?updated_at=#{merchant_ex.updated_at}"
 
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchant['data']['attributes']["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
+      expect(merchant['data']['attributes']["id"]).to eq(merchant_ex.id)
     end
 
     it 'can get all merchants by searching by id or name' do
@@ -90,24 +90,24 @@ describe "Merchants API" do
     end
 
     it 'can get all merchants by searching by created_at or updated_at' do
-      created_at = create(:merchant, created_at: "2012-03-27 14:54:05 UTC", updated_at: "2012-03-27 14:54:05 UTC".to_datetime).created_at
+      merchant_ex = create(:merchant, created_at: "2012-03-27 14:54:05 UTC", updated_at: "2012-03-27 14:54:05 UTC".to_datetime)
 
-      get "/api/v1/merchants/find_all?created_at=#{created_at}"
-
-      merchants = JSON.parse(response.body)
-
-      expect(response).to be_successful
-      expect(merchants['data'][0]['attributes']["created_at"]).to eq("2012-03-27T14:54:05.000Z")
-
-      updated_at = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC").updated_at
-
-      get "/api/v1/merchants/find_all?updated_at=#{updated_at}"
+      get "/api/v1/merchants/find_all?created_at=#{merchant_ex.created_at}"
 
       merchants = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchants['data'][0]['attributes']["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
-      expect(merchants['data'][1]['attributes']["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
+      expect(merchants['data'][0]['attributes']["id"]).to eq(merchant_ex.id)
+
+      merchant_why = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC")
+
+      get "/api/v1/merchants/find_all?updated_at=#{merchant_why.updated_at}"
+
+      merchants = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(merchants['data'][0]['attributes']["id"]).to eq(merchant_ex.id)
+      expect(merchants['data'][1]['attributes']["id"]).to eq(merchant_why.id)
       expect(merchants['data'].count).to eq(2)
     end
 
@@ -278,7 +278,7 @@ describe "Merchants API" do
         revenue = JSON.parse(response.body)
 
         expect(response).to be_successful
-        expect(revenue['data']['attributes']['revenue']).to eq("75.00")
+        expect(revenue['data']['attributes']['total_revenue']).to eq("75.00")
       end
     end
 
@@ -333,13 +333,12 @@ describe "Merchants API" do
         create(:transaction, invoice: @invoice_4, result: 'failed')
         create(:transaction, invoice: @invoice_4, result: 'failed')
 
-
         get "/api/v1/merchants/#{@merchant_4.id}/favorite_customer"
 
         customer = JSON.parse(response.body)['data']
 
         expect(response).to be_successful
-        expect(customer['attributes']).to eq({'first_name' => "Me", 'last_name' => "Also me"})
+        expect(customer['attributes']).to eq({'first_name' => "Me", 'id' => customer_2.id, 'last_name' => "Also me"})
       end
 
       it 'can get a list of customers with unpaid invoices' do

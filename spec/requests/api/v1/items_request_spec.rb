@@ -95,14 +95,14 @@ describe "Items API" do
     end
 
     it "can get one item by searching its unit_price" do
-      unit_price = create(:item, unit_price: 1111).unit_price
+      create(:item, unit_price: 1121)
 
-      get "/api/v1/items/find?unit_price=#{unit_price}"
+      get "/api/v1/items/find?unit_price=#{11.21}"
 
       item = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(item['data']['attributes']["unit_price"]).to eq(unit_price)
+      expect(item['data']['attributes']["unit_price"]).to eq("11.21")
     end
 
     it "can get one item by searching its created_at date" do
@@ -272,7 +272,7 @@ describe "Items API" do
       date = JSON.parse(response.body)['data']
 
       expect(response).to be_successful
-      expect(date['attributes']['best_day']).to eq("2012-03-27T14:54:05.000Z")
+      expect(date['attributes']['best_day']).to eq("2012-03-27")
     end
   end
 end
